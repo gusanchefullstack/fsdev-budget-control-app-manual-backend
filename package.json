@@ -1,0 +1,37 @@
+{
+  "name": "budget-control-app-backend",
+  "version": "1.0.0",
+  "description": "Budget control app developed with expressjs, typescript, prisma and mongodb",
+  "keywords": [
+    "expressjs",
+    "mongodb"
+  ],
+  "license": "MIT",
+  "author": "Gustavo Sanchez <gustavosanchezgalarza@gmail.com>",
+  "type": "module",
+  "main": "index.js",
+  "imports": {
+    "#*":"./src/*"
+  },
+  "scripts": {
+     "dev": "tsx --watch --env-file .env src/index.ts",
+    "start": "node --env-file -env dist/index.js",
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node22": "^22.0.2",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}
