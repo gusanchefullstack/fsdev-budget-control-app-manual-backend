@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  firstName String?
+  lastName  String?
+  email     String
+  username  String     @unique
+  password  String
+  accounts  Account[]
+  providers Provider[]
+  role      Role       @default(USER)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@map("users")
+}
+
+model Account {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  accountNumber String   @unique
+  entity        String
+  ownerId       String   @db.ObjectId
+  owner         User     @relation(fields: [ownerId], references: [id])
+  balance       Float?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("accounts")
+}
+
+model Provider {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  nit       String?
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("providers")
+}
