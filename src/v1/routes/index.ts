@@ -1,16 +1,31 @@
 import { Router } from "express";
 import { Request, Response, NextFunction } from "express";
+import authRouter from "./authRoutes.js";
+import accountRouter from "./accountRoutes.js";
+import { protect } from "#v1/middleware/auth.js";
 
-const apiv1 = Router();
+const apiv1Router = Router();
 
-apiv1.use("/accounts", (req: Request, res: Response, next: NextFunction) => {
-  res.send("account routes");
-});
-apiv1.use("/providers", (req: Request, res: Response, next: NextFunction) => {
-  res.send("providers routes");
-});
-apiv1.use("/admin", (req: Request, res: Response, next: NextFunction) => {
-  res.send("admin routes");
-});
+apiv1Router.use(
+  "/accounts",
+  protect,
+  accountRouter
+);
+apiv1Router.use(
+  "/providers",
+  protect,
+  (req: Request, res: Response, next: NextFunction) => {
+    res.send({ msg: "providers routes" });
+  }
+);
+apiv1Router.use(
+  "/admin",
+  protect,
+  (req: Request, res: Response, next: NextFunction) => {
+    res.send({ msg: "admin routes" });
+  }
+);
 
-export default apiv1;
+apiv1Router.use("/auth", authRouter);
+
+export default apiv1Router;

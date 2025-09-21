@@ -147,7 +147,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/gusanche/fsdev/projects/fsdev-budget-control-app-manual/backend/src/generated/prisma",
+      "value": "/Users/gsanchez/gusanchedev/projects/fsdev-budget-control-app-manual-backend/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -156,12 +156,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "darwin-arm64",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/gusanche/fsdev/projects/fsdev-budget-control-app-manual/backend/src/prisma/schema.prisma",
+    "sourceFilePath": "/Users/gsanchez/gusanchedev/projects/fsdev-budget-control-app-manual-backend/src/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

@@ -1,11 +1,13 @@
 interface Config {
   port: number;
   nodeEnv: string;
+  jwtSecret: string
 }
 
-const config: Config = {
-  port: Number(process.env.PORT) || 9001,
+const appConfig: Config = {
+  port: Number(process.env.PORT) || 9002,
   nodeEnv: process.env.NODE_ENV || "development",
+  jwtSecret: process.env.JWT_SECRET || "BudgetControlAppSecretKey"
 };
 
-export default Config;
+export default appConfig;
