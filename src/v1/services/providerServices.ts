@@ -70,7 +70,6 @@ const getSingleProvider = async (user: IJwtUser, providerId: string) => {
       if (provider) {
         return provider;
       } else {
-        console.log(providerId);
         throw new Error("Provider not found");
       }
     }

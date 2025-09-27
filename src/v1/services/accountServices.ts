@@ -71,7 +71,6 @@ const getSingleAccount = async (user: IJwtUser, accountId: string) => {
       if (account) {
         return account;
       } else {
-        console.log(accountId);
         throw new Error("Account not found");
       }
     }
