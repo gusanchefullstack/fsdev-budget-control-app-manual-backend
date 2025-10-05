@@ -145,6 +145,17 @@ exports.Prisma.ProviderScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.BudgetScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  ownerId: 'ownerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  starDate: 'starDate',
+  endDate: 'endDate'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -159,10 +170,26 @@ exports.Role = exports.$Enums.Role = {
   ADMIN: 'ADMIN'
 };
 
+exports.BudgetItemType = exports.$Enums.BudgetItemType = {
+  EXPENSE: 'EXPENSE',
+  INCOME: 'INCOME'
+};
+
+exports.BudgetElementFrequency = exports.$Enums.BudgetElementFrequency = {
+  DAILY: 'DAILY',
+  WEEKLY: 'WEEKLY',
+  MONTHLY: 'MONTHLY',
+  QUARTERLY: 'QUARTERLY',
+  SEMIANNUAL: 'SEMIANNUAL',
+  ANNUALY: 'ANNUALY',
+  ONETIME: 'ONETIME'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Account: 'Account',
-  Provider: 'Provider'
+  Provider: 'Provider',
+  Budget: 'Budget'
 };
 
 /**

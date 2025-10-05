@@ -19,6 +19,21 @@ enum Role {
   ADMIN
 }
 
+enum BudgetItemType {
+  EXPENSE
+  INCOME
+}
+
+enum BudgetElementFrequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+  SEMIANNUAL
+  ANNUALY
+  ONETIME
+}
+
 model User {
   id        String     @id @default(auto()) @map("_id") @db.ObjectId
   firstName String?
@@ -28,6 +43,7 @@ model User {
   password  String
   accounts  Account[]
   providers Provider[]
+  Budget    Budget[]
   role      Role       @default(USER)
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -59,4 +75,50 @@ model Provider {
   updatedAt DateTime @updatedAt
 
   @@map("providers")
+}
+
+model Budget {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  ownerId     String   @db.ObjectId
+  owner       User     @relation(fields: [ownerId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  starDate    DateTime
+  endDate     DateTime
+  incomes     Income
+  expenses    Expense
+
+  @@map("budgets")
+}
+
+type Income {
+  name       BudgetItemType   @default(INCOME)
+  categories BudgetCategory[]
+}
+
+type Expense {
+  name       BudgetItemType   @default(EXPENSE)
+  categories BudgetCategory[]
+}
+
+type BudgetCategory {
+  name        String
+  description String
+  items       BudgetElement[]
+}
+
+type BudgetElement {
+  name        String
+  description String
+  buckets     BudgetElementBucket[]
+  frequency   BudgetElementFrequency @default(MONTHLY)
+}
+
+type BudgetElementBucket {
+  estimatedAmount Float
+  currentAmount   Float
+  estimatedDate   DateTime
+  currentDate     DateTime
 }
