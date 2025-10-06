@@ -19,12 +19,12 @@ enum Role {
   ADMIN
 }
 
-enum BudgetItemType {
+enum CategoryType {
   EXPENSE
   INCOME
 }
 
-enum BudgetElementFrequency {
+enum BudgetItemFrequency {
   DAILY
   WEEKLY
   MONTHLY
@@ -78,45 +78,37 @@ model Provider {
 }
 
 model Budget {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String           @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   description String
-  ownerId     String   @db.ObjectId
-  owner       User     @relation(fields: [ownerId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  starDate    DateTime
+  ownerId     String           @db.ObjectId
+  owner       User             @relation(fields: [ownerId], references: [id])
+  startDate    DateTime
   endDate     DateTime
-  incomes     Income
-  expenses    Expense
+  incomes     BudgetCategory[]
+  expenses    BudgetCategory[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 
   @@map("budgets")
-}
-
-type Income {
-  name       BudgetItemType   @default(INCOME)
-  categories BudgetCategory[]
-}
-
-type Expense {
-  name       BudgetItemType   @default(EXPENSE)
-  categories BudgetCategory[]
 }
 
 type BudgetCategory {
   name        String
   description String
-  items       BudgetElement[]
+  type        CategoryType @default(EXPENSE)
+  items       BudgetItem[]
 }
 
-type BudgetElement {
-  name        String
-  description String
-  buckets     BudgetElementBucket[]
-  frequency   BudgetElementFrequency @default(MONTHLY)
+type BudgetItem {
+  name            String
+  description     String
+  buckets         BudgetItemBucket[]
+  frequency       BudgetItemFrequency @default(MONTHLY)
+  estimatedAmount Float
 }
 
-type BudgetElementBucket {
+type BudgetItemBucket {
   estimatedAmount Float
   currentAmount   Float
   estimatedDate   DateTime

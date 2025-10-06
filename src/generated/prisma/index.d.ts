@@ -14,30 +14,20 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model Income
- * 
- */
-export type Income = $Result.DefaultSelection<Prisma.$IncomePayload>
-/**
- * Model Expense
- * 
- */
-export type Expense = $Result.DefaultSelection<Prisma.$ExpensePayload>
-/**
  * Model BudgetCategory
  * 
  */
 export type BudgetCategory = $Result.DefaultSelection<Prisma.$BudgetCategoryPayload>
 /**
- * Model BudgetElement
+ * Model BudgetItem
  * 
  */
-export type BudgetElement = $Result.DefaultSelection<Prisma.$BudgetElementPayload>
+export type BudgetItem = $Result.DefaultSelection<Prisma.$BudgetItemPayload>
 /**
- * Model BudgetElementBucket
+ * Model BudgetItemBucket
  * 
  */
-export type BudgetElementBucket = $Result.DefaultSelection<Prisma.$BudgetElementBucketPayload>
+export type BudgetItemBucket = $Result.DefaultSelection<Prisma.$BudgetItemBucketPayload>
 /**
  * Model User
  * 
@@ -71,15 +61,15 @@ export namespace $Enums {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
-export const BudgetItemType: {
+export const CategoryType: {
   EXPENSE: 'EXPENSE',
   INCOME: 'INCOME'
 };
 
-export type BudgetItemType = (typeof BudgetItemType)[keyof typeof BudgetItemType]
+export type CategoryType = (typeof CategoryType)[keyof typeof CategoryType]
 
 
-export const BudgetElementFrequency: {
+export const BudgetItemFrequency: {
   DAILY: 'DAILY',
   WEEKLY: 'WEEKLY',
   MONTHLY: 'MONTHLY',
@@ -89,7 +79,7 @@ export const BudgetElementFrequency: {
   ONETIME: 'ONETIME'
 };
 
-export type BudgetElementFrequency = (typeof BudgetElementFrequency)[keyof typeof BudgetElementFrequency]
+export type BudgetItemFrequency = (typeof BudgetItemFrequency)[keyof typeof BudgetItemFrequency]
 
 }
 
@@ -97,13 +87,13 @@ export type Role = $Enums.Role
 
 export const Role: typeof $Enums.Role
 
-export type BudgetItemType = $Enums.BudgetItemType
+export type CategoryType = $Enums.CategoryType
 
-export const BudgetItemType: typeof $Enums.BudgetItemType
+export const CategoryType: typeof $Enums.CategoryType
 
-export type BudgetElementFrequency = $Enums.BudgetElementFrequency
+export type BudgetItemFrequency = $Enums.BudgetItemFrequency
 
-export const BudgetElementFrequency: typeof $Enums.BudgetElementFrequency
+export const BudgetItemFrequency: typeof $Enums.BudgetItemFrequency
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1203,140 +1193,6 @@ export namespace Prisma {
    */
 
   /**
-   * Model Income
-   */
-
-
-
-
-
-  export type IncomeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    name?: boolean
-    categories?: boolean | BudgetCategoryDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["income"]>
-
-
-
-  export type IncomeSelectScalar = {
-    name?: boolean
-  }
-
-  export type IncomeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"name" | "categories", ExtArgs["result"]["income"]>
-  export type IncomeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $IncomePayload = {
-    name: "Income"
-    objects: {}
-    scalars: {
-      name: $Enums.BudgetItemType
-    }
-    composites: {
-      categories: Prisma.$BudgetCategoryPayload[]
-    }
-  }
-
-  type IncomeGetPayload<S extends boolean | null | undefined | IncomeDefaultArgs> = $Result.GetResult<Prisma.$IncomePayload, S>
-
-
-
-
-
-  /**
-   * Fields of the Income model
-   */
-  interface IncomeFieldRefs {
-    readonly name: FieldRef<"Income", 'BudgetItemType'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Income without action
-   */
-  export type IncomeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Income
-     */
-    select?: IncomeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Income
-     */
-    omit?: IncomeOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: IncomeInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Expense
-   */
-
-
-
-
-
-  export type ExpenseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    name?: boolean
-    categories?: boolean | BudgetCategoryDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["expense"]>
-
-
-
-  export type ExpenseSelectScalar = {
-    name?: boolean
-  }
-
-  export type ExpenseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"name" | "categories", ExtArgs["result"]["expense"]>
-  export type ExpenseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $ExpensePayload = {
-    name: "Expense"
-    objects: {}
-    scalars: {
-      name: $Enums.BudgetItemType
-    }
-    composites: {
-      categories: Prisma.$BudgetCategoryPayload[]
-    }
-  }
-
-  type ExpenseGetPayload<S extends boolean | null | undefined | ExpenseDefaultArgs> = $Result.GetResult<Prisma.$ExpensePayload, S>
-
-
-
-
-
-  /**
-   * Fields of the Expense model
-   */
-  interface ExpenseFieldRefs {
-    readonly name: FieldRef<"Expense", 'BudgetItemType'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Expense without action
-   */
-  export type ExpenseDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Expense
-     */
-    select?: ExpenseSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Expense
-     */
-    omit?: ExpenseOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ExpenseInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model BudgetCategory
    */
 
@@ -1347,7 +1203,8 @@ export namespace Prisma {
   export type BudgetCategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     name?: boolean
     description?: boolean
-    items?: boolean | BudgetElementDefaultArgs<ExtArgs>
+    type?: boolean
+    items?: boolean | BudgetItemDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["budgetCategory"]>
 
 
@@ -1355,9 +1212,10 @@ export namespace Prisma {
   export type BudgetCategorySelectScalar = {
     name?: boolean
     description?: boolean
+    type?: boolean
   }
 
-  export type BudgetCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"name" | "description" | "items", ExtArgs["result"]["budgetCategory"]>
+  export type BudgetCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"name" | "description" | "type" | "items", ExtArgs["result"]["budgetCategory"]>
   export type BudgetCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $BudgetCategoryPayload = {
@@ -1366,9 +1224,10 @@ export namespace Prisma {
     scalars: {
       name: string
       description: string
+      type: $Enums.CategoryType
     }
     composites: {
-      items: Prisma.$BudgetElementPayload[]
+      items: Prisma.$BudgetItemPayload[]
     }
   }
 
@@ -1384,6 +1243,7 @@ export namespace Prisma {
   interface BudgetCategoryFieldRefs {
     readonly name: FieldRef<"BudgetCategory", 'String'>
     readonly description: FieldRef<"BudgetCategory", 'String'>
+    readonly type: FieldRef<"BudgetCategory", 'CategoryType'>
   }
     
 
@@ -1408,108 +1268,112 @@ export namespace Prisma {
 
 
   /**
-   * Model BudgetElement
+   * Model BudgetItem
    */
 
 
 
 
 
-  export type BudgetElementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type BudgetItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     name?: boolean
     description?: boolean
-    buckets?: boolean | BudgetElementBucketDefaultArgs<ExtArgs>
+    buckets?: boolean | BudgetItemBucketDefaultArgs<ExtArgs>
     frequency?: boolean
-  }, ExtArgs["result"]["budgetElement"]>
+    estimatedAmount?: boolean
+  }, ExtArgs["result"]["budgetItem"]>
 
 
 
-  export type BudgetElementSelectScalar = {
+  export type BudgetItemSelectScalar = {
     name?: boolean
     description?: boolean
     frequency?: boolean
+    estimatedAmount?: boolean
   }
 
-  export type BudgetElementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"name" | "description" | "buckets" | "frequency", ExtArgs["result"]["budgetElement"]>
-  export type BudgetElementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type BudgetItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"name" | "description" | "buckets" | "frequency" | "estimatedAmount", ExtArgs["result"]["budgetItem"]>
+  export type BudgetItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $BudgetElementPayload = {
-    name: "BudgetElement"
+  export type $BudgetItemPayload = {
+    name: "BudgetItem"
     objects: {}
     scalars: {
       name: string
       description: string
-      frequency: $Enums.BudgetElementFrequency
+      frequency: $Enums.BudgetItemFrequency
+      estimatedAmount: number
     }
     composites: {
-      buckets: Prisma.$BudgetElementBucketPayload[]
+      buckets: Prisma.$BudgetItemBucketPayload[]
     }
   }
 
-  type BudgetElementGetPayload<S extends boolean | null | undefined | BudgetElementDefaultArgs> = $Result.GetResult<Prisma.$BudgetElementPayload, S>
+  type BudgetItemGetPayload<S extends boolean | null | undefined | BudgetItemDefaultArgs> = $Result.GetResult<Prisma.$BudgetItemPayload, S>
 
 
 
 
 
   /**
-   * Fields of the BudgetElement model
+   * Fields of the BudgetItem model
    */
-  interface BudgetElementFieldRefs {
-    readonly name: FieldRef<"BudgetElement", 'String'>
-    readonly description: FieldRef<"BudgetElement", 'String'>
-    readonly frequency: FieldRef<"BudgetElement", 'BudgetElementFrequency'>
+  interface BudgetItemFieldRefs {
+    readonly name: FieldRef<"BudgetItem", 'String'>
+    readonly description: FieldRef<"BudgetItem", 'String'>
+    readonly frequency: FieldRef<"BudgetItem", 'BudgetItemFrequency'>
+    readonly estimatedAmount: FieldRef<"BudgetItem", 'Float'>
   }
     
 
   // Custom InputTypes
   /**
-   * BudgetElement without action
+   * BudgetItem without action
    */
-  export type BudgetElementDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type BudgetItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the BudgetElement
+     * Select specific fields to fetch from the BudgetItem
      */
-    select?: BudgetElementSelect<ExtArgs> | null
+    select?: BudgetItemSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the BudgetElement
+     * Omit specific fields from the BudgetItem
      */
-    omit?: BudgetElementOmit<ExtArgs> | null
+    omit?: BudgetItemOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: BudgetElementInclude<ExtArgs> | null
+    include?: BudgetItemInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model BudgetElementBucket
+   * Model BudgetItemBucket
    */
 
 
 
 
 
-  export type BudgetElementBucketSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type BudgetItemBucketSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     estimatedAmount?: boolean
     currentAmount?: boolean
     estimatedDate?: boolean
     currentDate?: boolean
-  }, ExtArgs["result"]["budgetElementBucket"]>
+  }, ExtArgs["result"]["budgetItemBucket"]>
 
 
 
-  export type BudgetElementBucketSelectScalar = {
+  export type BudgetItemBucketSelectScalar = {
     estimatedAmount?: boolean
     currentAmount?: boolean
     estimatedDate?: boolean
     currentDate?: boolean
   }
 
-  export type BudgetElementBucketOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"estimatedAmount" | "currentAmount" | "estimatedDate" | "currentDate", ExtArgs["result"]["budgetElementBucket"]>
+  export type BudgetItemBucketOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"estimatedAmount" | "currentAmount" | "estimatedDate" | "currentDate", ExtArgs["result"]["budgetItemBucket"]>
 
-  export type $BudgetElementBucketPayload = {
-    name: "BudgetElementBucket"
+  export type $BudgetItemBucketPayload = {
+    name: "BudgetItemBucket"
     objects: {}
     scalars: {
       estimatedAmount: number
@@ -1520,36 +1384,36 @@ export namespace Prisma {
     composites: {}
   }
 
-  type BudgetElementBucketGetPayload<S extends boolean | null | undefined | BudgetElementBucketDefaultArgs> = $Result.GetResult<Prisma.$BudgetElementBucketPayload, S>
+  type BudgetItemBucketGetPayload<S extends boolean | null | undefined | BudgetItemBucketDefaultArgs> = $Result.GetResult<Prisma.$BudgetItemBucketPayload, S>
 
 
 
 
 
   /**
-   * Fields of the BudgetElementBucket model
+   * Fields of the BudgetItemBucket model
    */
-  interface BudgetElementBucketFieldRefs {
-    readonly estimatedAmount: FieldRef<"BudgetElementBucket", 'Float'>
-    readonly currentAmount: FieldRef<"BudgetElementBucket", 'Float'>
-    readonly estimatedDate: FieldRef<"BudgetElementBucket", 'DateTime'>
-    readonly currentDate: FieldRef<"BudgetElementBucket", 'DateTime'>
+  interface BudgetItemBucketFieldRefs {
+    readonly estimatedAmount: FieldRef<"BudgetItemBucket", 'Float'>
+    readonly currentAmount: FieldRef<"BudgetItemBucket", 'Float'>
+    readonly estimatedDate: FieldRef<"BudgetItemBucket", 'DateTime'>
+    readonly currentDate: FieldRef<"BudgetItemBucket", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * BudgetElementBucket without action
+   * BudgetItemBucket without action
    */
-  export type BudgetElementBucketDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type BudgetItemBucketDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the BudgetElementBucket
+     * Select specific fields to fetch from the BudgetItemBucket
      */
-    select?: BudgetElementBucketSelect<ExtArgs> | null
+    select?: BudgetItemBucketSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the BudgetElementBucket
+     * Omit specific fields from the BudgetItemBucket
      */
-    omit?: BudgetElementBucketOmit<ExtArgs> | null
+    omit?: BudgetItemBucketOmit<ExtArgs> | null
   }
 
 
@@ -4709,10 +4573,10 @@ export namespace Prisma {
     name: string | null
     description: string | null
     ownerId: string | null
+    startDate: Date | null
+    endDate: Date | null
     createdAt: Date | null
     updatedAt: Date | null
-    starDate: Date | null
-    endDate: Date | null
   }
 
   export type BudgetMaxAggregateOutputType = {
@@ -4720,10 +4584,10 @@ export namespace Prisma {
     name: string | null
     description: string | null
     ownerId: string | null
+    startDate: Date | null
+    endDate: Date | null
     createdAt: Date | null
     updatedAt: Date | null
-    starDate: Date | null
-    endDate: Date | null
   }
 
   export type BudgetCountAggregateOutputType = {
@@ -4731,10 +4595,10 @@ export namespace Prisma {
     name: number
     description: number
     ownerId: number
+    startDate: number
+    endDate: number
     createdAt: number
     updatedAt: number
-    starDate: number
-    endDate: number
     _all: number
   }
 
@@ -4744,10 +4608,10 @@ export namespace Prisma {
     name?: true
     description?: true
     ownerId?: true
+    startDate?: true
+    endDate?: true
     createdAt?: true
     updatedAt?: true
-    starDate?: true
-    endDate?: true
   }
 
   export type BudgetMaxAggregateInputType = {
@@ -4755,10 +4619,10 @@ export namespace Prisma {
     name?: true
     description?: true
     ownerId?: true
+    startDate?: true
+    endDate?: true
     createdAt?: true
     updatedAt?: true
-    starDate?: true
-    endDate?: true
   }
 
   export type BudgetCountAggregateInputType = {
@@ -4766,10 +4630,10 @@ export namespace Prisma {
     name?: true
     description?: true
     ownerId?: true
+    startDate?: true
+    endDate?: true
     createdAt?: true
     updatedAt?: true
-    starDate?: true
-    endDate?: true
     _all?: true
   }
 
@@ -4850,10 +4714,10 @@ export namespace Prisma {
     name: string
     description: string
     ownerId: string
+    startDate: Date
+    endDate: Date
     createdAt: Date
     updatedAt: Date
-    starDate: Date
-    endDate: Date
     _count: BudgetCountAggregateOutputType | null
     _min: BudgetMinAggregateOutputType | null
     _max: BudgetMaxAggregateOutputType | null
@@ -4878,12 +4742,12 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     ownerId?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    incomes?: boolean | BudgetCategoryDefaultArgs<ExtArgs>
+    expenses?: boolean | BudgetCategoryDefaultArgs<ExtArgs>
     createdAt?: boolean
     updatedAt?: boolean
-    starDate?: boolean
-    endDate?: boolean
-    incomes?: boolean | IncomeDefaultArgs<ExtArgs>
-    expenses?: boolean | ExpenseDefaultArgs<ExtArgs>
     owner?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["budget"]>
 
@@ -4894,13 +4758,13 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     ownerId?: boolean
+    startDate?: boolean
+    endDate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    starDate?: boolean
-    endDate?: boolean
   }
 
-  export type BudgetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "ownerId" | "createdAt" | "updatedAt" | "starDate" | "endDate" | "incomes" | "expenses", ExtArgs["result"]["budget"]>
+  export type BudgetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "ownerId" | "startDate" | "endDate" | "incomes" | "expenses" | "createdAt" | "updatedAt", ExtArgs["result"]["budget"]>
   export type BudgetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -4915,14 +4779,14 @@ export namespace Prisma {
       name: string
       description: string
       ownerId: string
+      startDate: Date
+      endDate: Date
       createdAt: Date
       updatedAt: Date
-      starDate: Date
-      endDate: Date
     }, ExtArgs["result"]["budget"]>
     composites: {
-      incomes: Prisma.$IncomePayload
-      expenses: Prisma.$ExpensePayload
+      incomes: Prisma.$BudgetCategoryPayload[]
+      expenses: Prisma.$BudgetCategoryPayload[]
     }
   }
 
@@ -5319,10 +5183,10 @@ export namespace Prisma {
     readonly name: FieldRef<"Budget", 'String'>
     readonly description: FieldRef<"Budget", 'String'>
     readonly ownerId: FieldRef<"Budget", 'String'>
+    readonly startDate: FieldRef<"Budget", 'DateTime'>
+    readonly endDate: FieldRef<"Budget", 'DateTime'>
     readonly createdAt: FieldRef<"Budget", 'DateTime'>
     readonly updatedAt: FieldRef<"Budget", 'DateTime'>
-    readonly starDate: FieldRef<"Budget", 'DateTime'>
-    readonly endDate: FieldRef<"Budget", 'DateTime'>
   }
     
 
@@ -5761,10 +5625,10 @@ export namespace Prisma {
     name: 'name',
     description: 'description',
     ownerId: 'ownerId',
+    startDate: 'startDate',
+    endDate: 'endDate',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    starDate: 'starDate',
-    endDate: 'endDate'
+    updatedAt: 'updatedAt'
   };
 
   export type BudgetScalarFieldEnum = (typeof BudgetScalarFieldEnum)[keyof typeof BudgetScalarFieldEnum]
@@ -5862,30 +5726,30 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'BudgetItemType'
+   * Reference to a field of type 'CategoryType'
    */
-  export type EnumBudgetItemTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BudgetItemType'>
+  export type EnumCategoryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CategoryType'>
     
 
 
   /**
-   * Reference to a field of type 'BudgetItemType[]'
+   * Reference to a field of type 'CategoryType[]'
    */
-  export type ListEnumBudgetItemTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BudgetItemType[]'>
+  export type ListEnumCategoryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CategoryType[]'>
     
 
 
   /**
-   * Reference to a field of type 'BudgetElementFrequency'
+   * Reference to a field of type 'BudgetItemFrequency'
    */
-  export type EnumBudgetElementFrequencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BudgetElementFrequency'>
+  export type EnumBudgetItemFrequencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BudgetItemFrequency'>
     
 
 
   /**
-   * Reference to a field of type 'BudgetElementFrequency[]'
+   * Reference to a field of type 'BudgetItemFrequency[]'
    */
-  export type ListEnumBudgetElementFrequencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BudgetElementFrequency[]'>
+  export type ListEnumBudgetItemFrequencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BudgetItemFrequency[]'>
     
   /**
    * Deep Input Types
@@ -6113,12 +5977,12 @@ export namespace Prisma {
     name?: StringFilter<"Budget"> | string
     description?: StringFilter<"Budget"> | string
     ownerId?: StringFilter<"Budget"> | string
+    startDate?: DateTimeFilter<"Budget"> | Date | string
+    endDate?: DateTimeFilter<"Budget"> | Date | string
+    incomes?: BudgetCategoryCompositeListFilter | BudgetCategoryObjectEqualityInput[]
+    expenses?: BudgetCategoryCompositeListFilter | BudgetCategoryObjectEqualityInput[]
     createdAt?: DateTimeFilter<"Budget"> | Date | string
     updatedAt?: DateTimeFilter<"Budget"> | Date | string
-    starDate?: DateTimeFilter<"Budget"> | Date | string
-    endDate?: DateTimeFilter<"Budget"> | Date | string
-    incomes?: XOR<IncomeCompositeFilter, IncomeObjectEqualityInput>
-    expenses?: XOR<ExpenseCompositeFilter, ExpenseObjectEqualityInput>
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -6127,12 +5991,12 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     ownerId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    incomes?: BudgetCategoryOrderByCompositeAggregateInput
+    expenses?: BudgetCategoryOrderByCompositeAggregateInput
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    starDate?: SortOrder
-    endDate?: SortOrder
-    incomes?: IncomeOrderByInput
-    expenses?: ExpenseOrderByInput
     owner?: UserOrderByWithRelationInput
   }
 
@@ -6144,12 +6008,12 @@ export namespace Prisma {
     name?: StringFilter<"Budget"> | string
     description?: StringFilter<"Budget"> | string
     ownerId?: StringFilter<"Budget"> | string
+    startDate?: DateTimeFilter<"Budget"> | Date | string
+    endDate?: DateTimeFilter<"Budget"> | Date | string
+    incomes?: BudgetCategoryCompositeListFilter | BudgetCategoryObjectEqualityInput[]
+    expenses?: BudgetCategoryCompositeListFilter | BudgetCategoryObjectEqualityInput[]
     createdAt?: DateTimeFilter<"Budget"> | Date | string
     updatedAt?: DateTimeFilter<"Budget"> | Date | string
-    starDate?: DateTimeFilter<"Budget"> | Date | string
-    endDate?: DateTimeFilter<"Budget"> | Date | string
-    incomes?: XOR<IncomeCompositeFilter, IncomeObjectEqualityInput>
-    expenses?: XOR<ExpenseCompositeFilter, ExpenseObjectEqualityInput>
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
@@ -6158,10 +6022,10 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     ownerId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    starDate?: SortOrder
-    endDate?: SortOrder
     _count?: BudgetCountOrderByAggregateInput
     _max?: BudgetMaxOrderByAggregateInput
     _min?: BudgetMinOrderByAggregateInput
@@ -6175,10 +6039,10 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Budget"> | string
     description?: StringWithAggregatesFilter<"Budget"> | string
     ownerId?: StringWithAggregatesFilter<"Budget"> | string
+    startDate?: DateTimeWithAggregatesFilter<"Budget"> | Date | string
+    endDate?: DateTimeWithAggregatesFilter<"Budget"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"Budget"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Budget"> | Date | string
-    starDate?: DateTimeWithAggregatesFilter<"Budget"> | Date | string
-    endDate?: DateTimeWithAggregatesFilter<"Budget"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -6407,12 +6271,12 @@ export namespace Prisma {
     id?: string
     name: string
     description: string
+    startDate: Date | string
+    endDate: Date | string
+    incomes?: XOR<BudgetCategoryListCreateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
+    expenses?: XOR<BudgetCategoryListCreateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    starDate: Date | string
-    endDate: Date | string
-    incomes: XOR<IncomeCreateEnvelopeInput, IncomeCreateInput>
-    expenses: XOR<ExpenseCreateEnvelopeInput, ExpenseCreateInput>
     owner: UserCreateNestedOneWithoutBudgetInput
   }
 
@@ -6421,23 +6285,23 @@ export namespace Prisma {
     name: string
     description: string
     ownerId: string
+    startDate: Date | string
+    endDate: Date | string
+    incomes?: XOR<BudgetCategoryListCreateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
+    expenses?: XOR<BudgetCategoryListCreateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    starDate: Date | string
-    endDate: Date | string
-    incomes: XOR<IncomeCreateEnvelopeInput, IncomeCreateInput>
-    expenses: XOR<ExpenseCreateEnvelopeInput, ExpenseCreateInput>
   }
 
   export type BudgetUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    incomes?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
+    expenses?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    starDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    incomes?: XOR<IncomeUpdateEnvelopeInput, IncomeCreateInput>
-    expenses?: XOR<ExpenseUpdateEnvelopeInput, ExpenseCreateInput>
     owner?: UserUpdateOneRequiredWithoutBudgetNestedInput
   }
 
@@ -6445,12 +6309,12 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     ownerId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    incomes?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
+    expenses?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    starDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    incomes?: XOR<IncomeUpdateEnvelopeInput, IncomeCreateInput>
-    expenses?: XOR<ExpenseUpdateEnvelopeInput, ExpenseCreateInput>
   }
 
   export type BudgetCreateManyInput = {
@@ -6458,35 +6322,35 @@ export namespace Prisma {
     name: string
     description: string
     ownerId: string
+    startDate: Date | string
+    endDate: Date | string
+    incomes?: XOR<BudgetCategoryListCreateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
+    expenses?: XOR<BudgetCategoryListCreateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    starDate: Date | string
-    endDate: Date | string
-    incomes: XOR<IncomeCreateEnvelopeInput, IncomeCreateInput>
-    expenses: XOR<ExpenseCreateEnvelopeInput, ExpenseCreateInput>
   }
 
   export type BudgetUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    incomes?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
+    expenses?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    starDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    incomes?: XOR<IncomeUpdateEnvelopeInput, IncomeCreateInput>
-    expenses?: XOR<ExpenseUpdateEnvelopeInput, ExpenseCreateInput>
   }
 
   export type BudgetUncheckedUpdateManyInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     ownerId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    incomes?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
+    expenses?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    starDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    incomes?: XOR<IncomeUpdateEnvelopeInput, IncomeCreateInput>
-    expenses?: XOR<ExpenseUpdateEnvelopeInput, ExpenseCreateInput>
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -6767,36 +6631,24 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type IncomeCompositeFilter = {
-    equals?: IncomeObjectEqualityInput
-    is?: IncomeWhereInput
-    isNot?: IncomeWhereInput
+  export type BudgetCategoryCompositeListFilter = {
+    equals?: BudgetCategoryObjectEqualityInput[]
+    every?: BudgetCategoryWhereInput
+    some?: BudgetCategoryWhereInput
+    none?: BudgetCategoryWhereInput
+    isEmpty?: boolean
+    isSet?: boolean
   }
 
-  export type IncomeObjectEqualityInput = {
-    name: $Enums.BudgetItemType
-    categories?: BudgetCategoryObjectEqualityInput[]
+  export type BudgetCategoryObjectEqualityInput = {
+    name: string
+    description: string
+    type: $Enums.CategoryType
+    items?: BudgetItemObjectEqualityInput[]
   }
 
-  export type ExpenseCompositeFilter = {
-    equals?: ExpenseObjectEqualityInput
-    is?: ExpenseWhereInput
-    isNot?: ExpenseWhereInput
-  }
-
-  export type ExpenseObjectEqualityInput = {
-    name: $Enums.BudgetItemType
-    categories?: BudgetCategoryObjectEqualityInput[]
-  }
-
-  export type IncomeOrderByInput = {
-    name?: SortOrder
-    categories?: BudgetCategoryOrderByCompositeAggregateInput
-  }
-
-  export type ExpenseOrderByInput = {
-    name?: SortOrder
-    categories?: BudgetCategoryOrderByCompositeAggregateInput
+  export type BudgetCategoryOrderByCompositeAggregateInput = {
+    _count?: SortOrder
   }
 
   export type BudgetCountOrderByAggregateInput = {
@@ -6804,10 +6656,10 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     ownerId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    starDate?: SortOrder
-    endDate?: SortOrder
   }
 
   export type BudgetMaxOrderByAggregateInput = {
@@ -6815,10 +6667,10 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     ownerId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    starDate?: SortOrder
-    endDate?: SortOrder
   }
 
   export type BudgetMinOrderByAggregateInput = {
@@ -6826,10 +6678,10 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     ownerId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    starDate?: SortOrder
-    endDate?: SortOrder
   }
 
   export type AccountCreateNestedManyWithoutOwnerInput = {
@@ -7012,22 +6864,15 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProvidersInput, UserUpdateWithoutProvidersInput>, UserUncheckedUpdateWithoutProvidersInput>
   }
 
-  export type IncomeCreateEnvelopeInput = {
-    set?: IncomeCreateInput
+  export type BudgetCategoryListCreateEnvelopeInput = {
+    set?: BudgetCategoryCreateInput | BudgetCategoryCreateInput[]
   }
 
-  export type IncomeCreateInput = {
-    name?: $Enums.BudgetItemType
-    categories?: BudgetCategoryCreateInput | BudgetCategoryCreateInput[]
-  }
-
-  export type ExpenseCreateEnvelopeInput = {
-    set?: ExpenseCreateInput
-  }
-
-  export type ExpenseCreateInput = {
-    name?: $Enums.BudgetItemType
-    categories?: BudgetCategoryCreateInput | BudgetCategoryCreateInput[]
+  export type BudgetCategoryCreateInput = {
+    name: string
+    description: string
+    type?: $Enums.CategoryType
+    items?: BudgetItemCreateInput | BudgetItemCreateInput[]
   }
 
   export type UserCreateNestedOneWithoutBudgetInput = {
@@ -7036,14 +6881,11 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type IncomeUpdateEnvelopeInput = {
-    set?: IncomeCreateInput
-    update?: IncomeUpdateInput
-  }
-
-  export type ExpenseUpdateEnvelopeInput = {
-    set?: ExpenseCreateInput
-    update?: ExpenseUpdateInput
+  export type BudgetCategoryListUpdateEnvelopeInput = {
+    set?: BudgetCategoryCreateInput | BudgetCategoryCreateInput[]
+    push?: BudgetCategoryCreateInput | BudgetCategoryCreateInput[]
+    updateMany?: BudgetCategoryUpdateManyInput
+    deleteMany?: BudgetCategoryDeleteManyInput
   }
 
   export type UserUpdateOneRequiredWithoutBudgetNestedInput = {
@@ -7212,30 +7054,22 @@ export namespace Prisma {
     isSet?: boolean
   }
 
-  export type IncomeWhereInput = {
-    AND?: IncomeWhereInput | IncomeWhereInput[]
-    OR?: IncomeWhereInput[]
-    NOT?: IncomeWhereInput | IncomeWhereInput[]
-    name?: EnumBudgetItemTypeFilter<"Income"> | $Enums.BudgetItemType
-    categories?: BudgetCategoryCompositeListFilter | BudgetCategoryObjectEqualityInput[]
+  export type BudgetCategoryWhereInput = {
+    AND?: BudgetCategoryWhereInput | BudgetCategoryWhereInput[]
+    OR?: BudgetCategoryWhereInput[]
+    NOT?: BudgetCategoryWhereInput | BudgetCategoryWhereInput[]
+    name?: StringFilter<"BudgetCategory"> | string
+    description?: StringFilter<"BudgetCategory"> | string
+    type?: EnumCategoryTypeFilter<"BudgetCategory"> | $Enums.CategoryType
+    items?: BudgetItemCompositeListFilter | BudgetItemObjectEqualityInput[]
   }
 
-  export type BudgetCategoryObjectEqualityInput = {
+  export type BudgetItemObjectEqualityInput = {
     name: string
     description: string
-    items?: BudgetElementObjectEqualityInput[]
-  }
-
-  export type ExpenseWhereInput = {
-    AND?: ExpenseWhereInput | ExpenseWhereInput[]
-    OR?: ExpenseWhereInput[]
-    NOT?: ExpenseWhereInput | ExpenseWhereInput[]
-    name?: EnumBudgetItemTypeFilter<"Expense"> | $Enums.BudgetItemType
-    categories?: BudgetCategoryCompositeListFilter | BudgetCategoryObjectEqualityInput[]
-  }
-
-  export type BudgetCategoryOrderByCompositeAggregateInput = {
-    _count?: SortOrder
+    buckets?: BudgetItemBucketObjectEqualityInput[]
+    frequency: $Enums.BudgetItemFrequency
+    estimatedAmount: number
   }
 
   export type AccountCreateWithoutOwnerInput = {
@@ -7296,24 +7130,24 @@ export namespace Prisma {
     id?: string
     name: string
     description: string
+    startDate: Date | string
+    endDate: Date | string
+    incomes?: XOR<BudgetCategoryListCreateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
+    expenses?: XOR<BudgetCategoryListCreateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    starDate: Date | string
-    endDate: Date | string
-    incomes: XOR<IncomeCreateEnvelopeInput, IncomeCreateInput>
-    expenses: XOR<ExpenseCreateEnvelopeInput, ExpenseCreateInput>
   }
 
   export type BudgetUncheckedCreateWithoutOwnerInput = {
     id?: string
     name: string
     description: string
+    startDate: Date | string
+    endDate: Date | string
+    incomes?: XOR<BudgetCategoryListCreateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
+    expenses?: XOR<BudgetCategoryListCreateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    starDate: Date | string
-    endDate: Date | string
-    incomes: XOR<IncomeCreateEnvelopeInput, IncomeCreateInput>
-    expenses: XOR<ExpenseCreateEnvelopeInput, ExpenseCreateInput>
   }
 
   export type BudgetCreateOrConnectWithoutOwnerInput = {
@@ -7407,10 +7241,10 @@ export namespace Prisma {
     name?: StringFilter<"Budget"> | string
     description?: StringFilter<"Budget"> | string
     ownerId?: StringFilter<"Budget"> | string
+    startDate?: DateTimeFilter<"Budget"> | Date | string
+    endDate?: DateTimeFilter<"Budget"> | Date | string
     createdAt?: DateTimeFilter<"Budget"> | Date | string
     updatedAt?: DateTimeFilter<"Budget"> | Date | string
-    starDate?: DateTimeFilter<"Budget"> | Date | string
-    endDate?: DateTimeFilter<"Budget"> | Date | string
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -7553,10 +7387,12 @@ export namespace Prisma {
     Budget?: BudgetUncheckedUpdateManyWithoutOwnerNestedInput
   }
 
-  export type BudgetCategoryCreateInput = {
+  export type BudgetItemCreateInput = {
     name: string
     description: string
-    items?: BudgetElementCreateInput | BudgetElementCreateInput[]
+    buckets?: BudgetItemBucketCreateInput | BudgetItemBucketCreateInput[]
+    frequency?: $Enums.BudgetItemFrequency
+    estimatedAmount: number
   }
 
   export type UserCreateWithoutBudgetInput = {
@@ -7592,14 +7428,13 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutBudgetInput, UserUncheckedCreateWithoutBudgetInput>
   }
 
-  export type IncomeUpdateInput = {
-    name?: EnumBudgetItemTypeFieldUpdateOperationsInput | $Enums.BudgetItemType
-    categories?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
+  export type BudgetCategoryUpdateManyInput = {
+    where: BudgetCategoryWhereInput
+    data: BudgetCategoryUpdateInput
   }
 
-  export type ExpenseUpdateInput = {
-    name?: EnumBudgetItemTypeFieldUpdateOperationsInput | $Enums.BudgetItemType
-    categories?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
+  export type BudgetCategoryDeleteManyInput = {
+    where: BudgetCategoryWhereInput
   }
 
   export type UserUpsertWithoutBudgetInput = {
@@ -7639,27 +7474,27 @@ export namespace Prisma {
     providers?: ProviderUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type EnumBudgetItemTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.BudgetItemType | EnumBudgetItemTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.BudgetItemType[] | ListEnumBudgetItemTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.BudgetItemType[] | ListEnumBudgetItemTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumBudgetItemTypeFilter<$PrismaModel> | $Enums.BudgetItemType
+  export type EnumCategoryTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.CategoryType | EnumCategoryTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.CategoryType[] | ListEnumCategoryTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CategoryType[] | ListEnumCategoryTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumCategoryTypeFilter<$PrismaModel> | $Enums.CategoryType
   }
 
-  export type BudgetCategoryCompositeListFilter = {
-    equals?: BudgetCategoryObjectEqualityInput[]
-    every?: BudgetCategoryWhereInput
-    some?: BudgetCategoryWhereInput
-    none?: BudgetCategoryWhereInput
+  export type BudgetItemCompositeListFilter = {
+    equals?: BudgetItemObjectEqualityInput[]
+    every?: BudgetItemWhereInput
+    some?: BudgetItemWhereInput
+    none?: BudgetItemWhereInput
     isEmpty?: boolean
     isSet?: boolean
   }
 
-  export type BudgetElementObjectEqualityInput = {
-    name: string
-    description: string
-    buckets?: BudgetElementBucketObjectEqualityInput[]
-    frequency: $Enums.BudgetElementFrequency
+  export type BudgetItemBucketObjectEqualityInput = {
+    estimatedAmount: number
+    currentAmount: number
+    estimatedDate: Date | string
+    currentDate: Date | string
   }
 
   export type AccountCreateManyOwnerInput = {
@@ -7684,12 +7519,12 @@ export namespace Prisma {
     id?: string
     name: string
     description: string
+    startDate: Date | string
+    endDate: Date | string
+    incomes?: XOR<BudgetCategoryListCreateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
+    expenses?: XOR<BudgetCategoryListCreateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    starDate: Date | string
-    endDate: Date | string
-    incomes: XOR<IncomeCreateEnvelopeInput, IncomeCreateInput>
-    expenses: XOR<ExpenseCreateEnvelopeInput, ExpenseCreateInput>
   }
 
   export type AccountUpdateWithoutOwnerInput = {
@@ -7743,172 +7578,93 @@ export namespace Prisma {
   export type BudgetUpdateWithoutOwnerInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    incomes?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
+    expenses?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    starDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    incomes?: XOR<IncomeUpdateEnvelopeInput, IncomeCreateInput>
-    expenses?: XOR<ExpenseUpdateEnvelopeInput, ExpenseCreateInput>
   }
 
   export type BudgetUncheckedUpdateWithoutOwnerInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    incomes?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
+    expenses?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    starDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    incomes?: XOR<IncomeUpdateEnvelopeInput, IncomeCreateInput>
-    expenses?: XOR<ExpenseUpdateEnvelopeInput, ExpenseCreateInput>
   }
 
   export type BudgetUncheckedUpdateManyWithoutOwnerInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    incomes?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
+    expenses?: XOR<BudgetCategoryListUpdateEnvelopeInput, BudgetCategoryCreateInput> | BudgetCategoryCreateInput[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    starDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    incomes?: XOR<IncomeUpdateEnvelopeInput, IncomeCreateInput>
-    expenses?: XOR<ExpenseUpdateEnvelopeInput, ExpenseCreateInput>
   }
 
-  export type BudgetElementCreateInput = {
-    name: string
-    description: string
-    buckets?: BudgetElementBucketCreateInput | BudgetElementBucketCreateInput[]
-    frequency?: $Enums.BudgetElementFrequency
-  }
-
-  export type EnumBudgetItemTypeFieldUpdateOperationsInput = {
-    set?: $Enums.BudgetItemType
-  }
-
-  export type BudgetCategoryListUpdateEnvelopeInput = {
-    set?: BudgetCategoryCreateInput | BudgetCategoryCreateInput[]
-    push?: BudgetCategoryCreateInput | BudgetCategoryCreateInput[]
-    updateMany?: BudgetCategoryUpdateManyInput
-    deleteMany?: BudgetCategoryDeleteManyInput
-  }
-
-  export type NestedEnumBudgetItemTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.BudgetItemType | EnumBudgetItemTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.BudgetItemType[] | ListEnumBudgetItemTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.BudgetItemType[] | ListEnumBudgetItemTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumBudgetItemTypeFilter<$PrismaModel> | $Enums.BudgetItemType
-  }
-
-  export type BudgetCategoryWhereInput = {
-    AND?: BudgetCategoryWhereInput | BudgetCategoryWhereInput[]
-    OR?: BudgetCategoryWhereInput[]
-    NOT?: BudgetCategoryWhereInput | BudgetCategoryWhereInput[]
-    name?: StringFilter<"BudgetCategory"> | string
-    description?: StringFilter<"BudgetCategory"> | string
-    items?: BudgetElementCompositeListFilter | BudgetElementObjectEqualityInput[]
-  }
-
-  export type BudgetElementBucketObjectEqualityInput = {
+  export type BudgetItemBucketCreateInput = {
     estimatedAmount: number
     currentAmount: number
     estimatedDate: Date | string
     currentDate: Date | string
-  }
-
-  export type BudgetElementBucketCreateInput = {
-    estimatedAmount: number
-    currentAmount: number
-    estimatedDate: Date | string
-    currentDate: Date | string
-  }
-
-  export type BudgetCategoryUpdateManyInput = {
-    where: BudgetCategoryWhereInput
-    data: BudgetCategoryUpdateInput
-  }
-
-  export type BudgetCategoryDeleteManyInput = {
-    where: BudgetCategoryWhereInput
-  }
-
-  export type BudgetElementCompositeListFilter = {
-    equals?: BudgetElementObjectEqualityInput[]
-    every?: BudgetElementWhereInput
-    some?: BudgetElementWhereInput
-    none?: BudgetElementWhereInput
-    isEmpty?: boolean
-    isSet?: boolean
   }
 
   export type BudgetCategoryUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    items?: XOR<BudgetElementListUpdateEnvelopeInput, BudgetElementCreateInput> | BudgetElementCreateInput[]
+    type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+    items?: XOR<BudgetItemListUpdateEnvelopeInput, BudgetItemCreateInput> | BudgetItemCreateInput[]
   }
 
-  export type BudgetElementWhereInput = {
-    AND?: BudgetElementWhereInput | BudgetElementWhereInput[]
-    OR?: BudgetElementWhereInput[]
-    NOT?: BudgetElementWhereInput | BudgetElementWhereInput[]
-    name?: StringFilter<"BudgetElement"> | string
-    description?: StringFilter<"BudgetElement"> | string
-    buckets?: BudgetElementBucketCompositeListFilter | BudgetElementBucketObjectEqualityInput[]
-    frequency?: EnumBudgetElementFrequencyFilter<"BudgetElement"> | $Enums.BudgetElementFrequency
+  export type NestedEnumCategoryTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.CategoryType | EnumCategoryTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.CategoryType[] | ListEnumCategoryTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CategoryType[] | ListEnumCategoryTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumCategoryTypeFilter<$PrismaModel> | $Enums.CategoryType
   }
 
-  export type BudgetElementListUpdateEnvelopeInput = {
-    set?: BudgetElementCreateInput | BudgetElementCreateInput[]
-    push?: BudgetElementCreateInput | BudgetElementCreateInput[]
-    updateMany?: BudgetElementUpdateManyInput
-    deleteMany?: BudgetElementDeleteManyInput
+  export type BudgetItemWhereInput = {
+    AND?: BudgetItemWhereInput | BudgetItemWhereInput[]
+    OR?: BudgetItemWhereInput[]
+    NOT?: BudgetItemWhereInput | BudgetItemWhereInput[]
+    name?: StringFilter<"BudgetItem"> | string
+    description?: StringFilter<"BudgetItem"> | string
+    buckets?: BudgetItemBucketCompositeListFilter | BudgetItemBucketObjectEqualityInput[]
+    frequency?: EnumBudgetItemFrequencyFilter<"BudgetItem"> | $Enums.BudgetItemFrequency
+    estimatedAmount?: FloatFilter<"BudgetItem"> | number
   }
 
-  export type BudgetElementBucketCompositeListFilter = {
-    equals?: BudgetElementBucketObjectEqualityInput[]
-    every?: BudgetElementBucketWhereInput
-    some?: BudgetElementBucketWhereInput
-    none?: BudgetElementBucketWhereInput
+  export type EnumCategoryTypeFieldUpdateOperationsInput = {
+    set?: $Enums.CategoryType
+  }
+
+  export type BudgetItemListUpdateEnvelopeInput = {
+    set?: BudgetItemCreateInput | BudgetItemCreateInput[]
+    push?: BudgetItemCreateInput | BudgetItemCreateInput[]
+    updateMany?: BudgetItemUpdateManyInput
+    deleteMany?: BudgetItemDeleteManyInput
+  }
+
+  export type BudgetItemBucketCompositeListFilter = {
+    equals?: BudgetItemBucketObjectEqualityInput[]
+    every?: BudgetItemBucketWhereInput
+    some?: BudgetItemBucketWhereInput
+    none?: BudgetItemBucketWhereInput
     isEmpty?: boolean
     isSet?: boolean
   }
 
-  export type EnumBudgetElementFrequencyFilter<$PrismaModel = never> = {
-    equals?: $Enums.BudgetElementFrequency | EnumBudgetElementFrequencyFieldRefInput<$PrismaModel>
-    in?: $Enums.BudgetElementFrequency[] | ListEnumBudgetElementFrequencyFieldRefInput<$PrismaModel>
-    notIn?: $Enums.BudgetElementFrequency[] | ListEnumBudgetElementFrequencyFieldRefInput<$PrismaModel>
-    not?: NestedEnumBudgetElementFrequencyFilter<$PrismaModel> | $Enums.BudgetElementFrequency
-  }
-
-  export type BudgetElementUpdateManyInput = {
-    where: BudgetElementWhereInput
-    data: BudgetElementUpdateInput
-  }
-
-  export type BudgetElementDeleteManyInput = {
-    where: BudgetElementWhereInput
-  }
-
-  export type BudgetElementBucketWhereInput = {
-    AND?: BudgetElementBucketWhereInput | BudgetElementBucketWhereInput[]
-    OR?: BudgetElementBucketWhereInput[]
-    NOT?: BudgetElementBucketWhereInput | BudgetElementBucketWhereInput[]
-    estimatedAmount?: FloatFilter<"BudgetElementBucket"> | number
-    currentAmount?: FloatFilter<"BudgetElementBucket"> | number
-    estimatedDate?: DateTimeFilter<"BudgetElementBucket"> | Date | string
-    currentDate?: DateTimeFilter<"BudgetElementBucket"> | Date | string
-  }
-
-  export type NestedEnumBudgetElementFrequencyFilter<$PrismaModel = never> = {
-    equals?: $Enums.BudgetElementFrequency | EnumBudgetElementFrequencyFieldRefInput<$PrismaModel>
-    in?: $Enums.BudgetElementFrequency[] | ListEnumBudgetElementFrequencyFieldRefInput<$PrismaModel>
-    notIn?: $Enums.BudgetElementFrequency[] | ListEnumBudgetElementFrequencyFieldRefInput<$PrismaModel>
-    not?: NestedEnumBudgetElementFrequencyFilter<$PrismaModel> | $Enums.BudgetElementFrequency
-  }
-
-  export type BudgetElementUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    buckets?: XOR<BudgetElementBucketListUpdateEnvelopeInput, BudgetElementBucketCreateInput> | BudgetElementBucketCreateInput[]
-    frequency?: EnumBudgetElementFrequencyFieldUpdateOperationsInput | $Enums.BudgetElementFrequency
+  export type EnumBudgetItemFrequencyFilter<$PrismaModel = never> = {
+    equals?: $Enums.BudgetItemFrequency | EnumBudgetItemFrequencyFieldRefInput<$PrismaModel>
+    in?: $Enums.BudgetItemFrequency[] | ListEnumBudgetItemFrequencyFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BudgetItemFrequency[] | ListEnumBudgetItemFrequencyFieldRefInput<$PrismaModel>
+    not?: NestedEnumBudgetItemFrequencyFilter<$PrismaModel> | $Enums.BudgetItemFrequency
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -7922,15 +7678,30 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type BudgetElementBucketListUpdateEnvelopeInput = {
-    set?: BudgetElementBucketCreateInput | BudgetElementBucketCreateInput[]
-    push?: BudgetElementBucketCreateInput | BudgetElementBucketCreateInput[]
-    updateMany?: BudgetElementBucketUpdateManyInput
-    deleteMany?: BudgetElementBucketDeleteManyInput
+  export type BudgetItemUpdateManyInput = {
+    where: BudgetItemWhereInput
+    data: BudgetItemUpdateInput
   }
 
-  export type EnumBudgetElementFrequencyFieldUpdateOperationsInput = {
-    set?: $Enums.BudgetElementFrequency
+  export type BudgetItemDeleteManyInput = {
+    where: BudgetItemWhereInput
+  }
+
+  export type BudgetItemBucketWhereInput = {
+    AND?: BudgetItemBucketWhereInput | BudgetItemBucketWhereInput[]
+    OR?: BudgetItemBucketWhereInput[]
+    NOT?: BudgetItemBucketWhereInput | BudgetItemBucketWhereInput[]
+    estimatedAmount?: FloatFilter<"BudgetItemBucket"> | number
+    currentAmount?: FloatFilter<"BudgetItemBucket"> | number
+    estimatedDate?: DateTimeFilter<"BudgetItemBucket"> | Date | string
+    currentDate?: DateTimeFilter<"BudgetItemBucket"> | Date | string
+  }
+
+  export type NestedEnumBudgetItemFrequencyFilter<$PrismaModel = never> = {
+    equals?: $Enums.BudgetItemFrequency | EnumBudgetItemFrequencyFieldRefInput<$PrismaModel>
+    in?: $Enums.BudgetItemFrequency[] | ListEnumBudgetItemFrequencyFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BudgetItemFrequency[] | ListEnumBudgetItemFrequencyFieldRefInput<$PrismaModel>
+    not?: NestedEnumBudgetItemFrequencyFilter<$PrismaModel> | $Enums.BudgetItemFrequency
   }
 
   export type NestedFloatFilter<$PrismaModel = never> = {
@@ -7944,20 +7715,23 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type BudgetElementBucketUpdateManyInput = {
-    where: BudgetElementBucketWhereInput
-    data: BudgetElementBucketUpdateInput
-  }
-
-  export type BudgetElementBucketDeleteManyInput = {
-    where: BudgetElementBucketWhereInput
-  }
-
-  export type BudgetElementBucketUpdateInput = {
+  export type BudgetItemUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    buckets?: XOR<BudgetItemBucketListUpdateEnvelopeInput, BudgetItemBucketCreateInput> | BudgetItemBucketCreateInput[]
+    frequency?: EnumBudgetItemFrequencyFieldUpdateOperationsInput | $Enums.BudgetItemFrequency
     estimatedAmount?: FloatFieldUpdateOperationsInput | number
-    currentAmount?: FloatFieldUpdateOperationsInput | number
-    estimatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    currentDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BudgetItemBucketListUpdateEnvelopeInput = {
+    set?: BudgetItemBucketCreateInput | BudgetItemBucketCreateInput[]
+    push?: BudgetItemBucketCreateInput | BudgetItemBucketCreateInput[]
+    updateMany?: BudgetItemBucketUpdateManyInput
+    deleteMany?: BudgetItemBucketDeleteManyInput
+  }
+
+  export type EnumBudgetItemFrequencyFieldUpdateOperationsInput = {
+    set?: $Enums.BudgetItemFrequency
   }
 
   export type FloatFieldUpdateOperationsInput = {
@@ -7966,6 +7740,22 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type BudgetItemBucketUpdateManyInput = {
+    where: BudgetItemBucketWhereInput
+    data: BudgetItemBucketUpdateInput
+  }
+
+  export type BudgetItemBucketDeleteManyInput = {
+    where: BudgetItemBucketWhereInput
+  }
+
+  export type BudgetItemBucketUpdateInput = {
+    estimatedAmount?: FloatFieldUpdateOperationsInput | number
+    currentAmount?: FloatFieldUpdateOperationsInput | number
+    estimatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    currentDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

@@ -150,10 +150,10 @@ exports.Prisma.BudgetScalarFieldEnum = {
   name: 'name',
   description: 'description',
   ownerId: 'ownerId',
+  startDate: 'startDate',
+  endDate: 'endDate',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  starDate: 'starDate',
-  endDate: 'endDate'
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -170,12 +170,12 @@ exports.Role = exports.$Enums.Role = {
   ADMIN: 'ADMIN'
 };
 
-exports.BudgetItemType = exports.$Enums.BudgetItemType = {
+exports.CategoryType = exports.$Enums.CategoryType = {
   EXPENSE: 'EXPENSE',
   INCOME: 'INCOME'
 };
 
-exports.BudgetElementFrequency = exports.$Enums.BudgetElementFrequency = {
+exports.BudgetItemFrequency = exports.$Enums.BudgetItemFrequency = {
   DAILY: 'DAILY',
   WEEKLY: 'WEEKLY',
   MONTHLY: 'MONTHLY',

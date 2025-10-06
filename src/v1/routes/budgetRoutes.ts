@@ -9,13 +9,17 @@ const budgetRouter = Router();
 budgetRouter.post(
   "/",
   body("name").exists().trim().isString().withMessage("Invalid budget name"),
-  body("budgetNumber")
+  body("description")
     .exists()
     .trim()
-    .isNumeric()
-    .withMessage("Invalid budget number"),
-  body("entity").exists().trim().isString().withMessage("Invalid entity"),
-  body("balance").exists().trim().isNumeric().withMessage("Invalid balance").toFloat(),
+    .isString()
+    .withMessage("Invalid budget description"),
+  body("startDate")
+    .exists()
+    .trim()
+    .isISO8601()
+    .withMessage("Invalid start date"),
+  body("endDate").exists().trim().isISO8601().withMessage("Invalid end date"),
   inputValidatorHandler,
   budgetController.createBudget
 );
@@ -30,13 +34,17 @@ budgetRouter.put(
   "/:budgetId",
   param("budgetId").isMongoId().withMessage("Invalid budget id"),
   body("name").optional().trim().isString().withMessage("Invalid budget name"),
-  body("budgetNumber")
+  body("description")
     .optional()
     .trim()
-    .isNumeric()
-    .withMessage("Invalid budget number"),
-  body("entity").optional().trim().isString().withMessage("Invalid entity"),
-  body("balance").optional().trim().isNumeric().withMessage("Invalid balance").toFloat(),
+    .isString()
+    .withMessage("Invalid budget description"),
+  body("startDate")
+    .optional()
+    .trim()
+    .isISO8601()
+    .withMessage("Invalid start date"),
+  body("endDate").optional().trim().isISO8601().withMessage("Invalid end date"),
   inputValidatorHandler,
   budgetController.updateBudget
 );

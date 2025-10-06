@@ -3,12 +3,14 @@ import { Request, Response, NextFunction } from "express";
 import authRouter from "./authRoutes.js";
 import accountRouter from "./accountRoutes.js";
 import providerRouter from "./providerRoutes.js";
+import budgetRouter from "./budgetRoutes.js";
 import { protect } from "#v1/middleware/auth.js";
 
 const apiv1Router = Router();
 
 apiv1Router.use("/accounts", protect, accountRouter);
 apiv1Router.use("/providers", protect, providerRouter);
+apiv1Router.use("/budgets", protect, budgetRouter);
 apiv1Router.use(
   "/admin",
   protect,
