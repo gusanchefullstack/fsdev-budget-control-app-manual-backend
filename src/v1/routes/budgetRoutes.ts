@@ -55,4 +55,27 @@ budgetRouter.delete(
   budgetController.deleteBudget
 );
 
+// CRUD operations for Budget Categpries
+budgetRouter.put(
+  "/:budgetId/categories",
+  param("budgetId").isMongoId().withMessage("Invalid budget id"),
+  body("name")
+    .exists()
+    .trim()
+    .isString()
+    .withMessage("Invalid budget category name"),
+  body("description")
+    .exists()
+    .trim()
+    .isString()
+    .withMessage("Invalid budget category description"),
+  body("type")
+    .exists()
+    .trim()
+    .isIn(["incomes", "expenses"])
+    .withMessage("Invalid budget category type"),
+  inputValidatorHandler,
+  budgetController.addBudgetCategory
+);
+
 export default budgetRouter;

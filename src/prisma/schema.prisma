@@ -20,8 +20,8 @@ enum Role {
 }
 
 enum CategoryType {
-  EXPENSE
-  INCOME
+  incomes
+  expenses
 }
 
 enum BudgetItemFrequency {
@@ -83,20 +83,24 @@ model Budget {
   description String
   ownerId     String           @db.ObjectId
   owner       User             @relation(fields: [ownerId], references: [id])
-  startDate    DateTime
+  startDate   DateTime
   endDate     DateTime
   incomes     BudgetCategory[]
   expenses    BudgetCategory[]
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
 
+  @@unique([incomes.name])
+  @@unique([expenses.name])
+  @@unique([incomes.items.name])
+  @@unique([expenses.items.name])
   @@map("budgets")
 }
 
 type BudgetCategory {
   name        String
   description String
-  type        CategoryType @default(EXPENSE)
+  type        CategoryType @default(expenses)
   items       BudgetItem[]
 }
 

@@ -76,10 +76,29 @@ const deleteBudget = async (
   }
 };
 
+// CRUD Operations for Budget Categories
+
+const addBudgetCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = req.user as IJwtUser;
+    const { budgetId } = req.params;
+    const data = req.body;
+    const budget = await budgetServices.addBudgetCategory(user, budgetId, data);
+    res.status(200).json({ status: "Ok", budget });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   getAllBudgets,
   getSingleBudget,
   createBudget,
   updateBudget,
   deleteBudget,
+  addBudgetCategory,
 };

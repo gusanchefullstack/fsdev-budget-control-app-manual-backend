@@ -171,8 +171,8 @@ exports.Role = exports.$Enums.Role = {
 };
 
 exports.CategoryType = exports.$Enums.CategoryType = {
-  EXPENSE: 'EXPENSE',
-  INCOME: 'INCOME'
+  incomes: 'incomes',
+  expenses: 'expenses'
 };
 
 exports.BudgetItemFrequency = exports.$Enums.BudgetItemFrequency = {

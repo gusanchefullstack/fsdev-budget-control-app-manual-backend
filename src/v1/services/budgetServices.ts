@@ -1,12 +1,12 @@
-import { PrismaClient, Prisma } from "#generated/prisma/index.js";
+import {
+  PrismaClient,
+  Prisma
+} from "#generated/prisma/index.js";
 import { IJwtUser } from "#v1/models/userJWT.js";
 
 const prisma = new PrismaClient();
 
-const createBudget = async (
-  user: IJwtUser,
-  data: Prisma.BudgetCreateInput
-) => {
+const createBudget = async (user: IJwtUser, data: Prisma.BudgetCreateInput) => {
   try {
     const validatedUser = await prisma.user.findFirst({
       where: {
@@ -129,10 +129,71 @@ const deleteBudget = async (user: IJwtUser, budgetId: string) => {
   }
 };
 
+// Operations for CRUD Budget Categories
+const addBudgetCategory = async (
+  user: IJwtUser,
+  budgetId: string,
+  data: Prisma.BudgetCategoryWhereInput
+) => {
+  try {
+    const validatedUser = await prisma.user.findUnique({
+      where: {
+        id: user.userId,
+      },
+    });
+    if (validatedUser) {
+      const budget = await prisma.budget.findUnique({
+        where: {
+          id: budgetId,
+        },
+      });
+      if (!budget) {
+        throw new Error("Budget nof found");
+      }
+      if (data.type === "incomes" || data.type === "expenses") {
+        const categoryExist = await prisma.budget.findUnique({
+          where: {
+            id: budgetId,
+            [data.type]: {
+              some: {
+                name: data.name,
+              },
+            },
+          },
+        });
+        if (categoryExist) {
+          throw new Error(
+            `Category  ${data.name} already exist in ${data.type}`
+          );
+        }
+
+        const updatedBudget = await prisma.budget.update({
+          where: {
+            id: budgetId,
+          },
+          data: {
+            [data.type]: {
+              push: {
+                ...data,
+              },
+            },
+          },
+        });
+        return updatedBudget;
+      }
+    } else {
+      throw new Error("Invalid user");
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
 export default {
   createBudget,
   getBudgets,
   getSingleBudget,
   updateBudget,
   deleteBudget,
+  addBudgetCategory,
 };

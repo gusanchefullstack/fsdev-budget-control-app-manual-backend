@@ -62,8 +62,8 @@ export type Role = (typeof Role)[keyof typeof Role]
 
 
 export const CategoryType: {
-  EXPENSE: 'EXPENSE',
-  INCOME: 'INCOME'
+  incomes: 'incomes',
+  expenses: 'expenses'
 };
 
 export type CategoryType = (typeof CategoryType)[keyof typeof CategoryType]
@@ -6015,7 +6015,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Budget"> | Date | string
     updatedAt?: DateTimeFilter<"Budget"> | Date | string
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "name" | "name" | "name" | "name">
 
   export type BudgetOrderByWithAggregationInput = {
     id?: SortOrder
