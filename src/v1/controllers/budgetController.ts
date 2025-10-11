@@ -94,6 +94,38 @@ const addBudgetCategory = async (
   }
 };
 
+const updateBudgetCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = req.user as IJwtUser;
+    const { budgetId } = req.params;
+    const data = req.body;
+    const budget = await budgetServices.updateBudgetCategory(user, budgetId, data);  //TODO Change function
+    res.status(200).json({ status: "Ok", budget });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteBudgetCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = req.user as IJwtUser;
+    const { budgetId } = req.params;
+    const data = req.body;
+    const budget = await budgetServices.deleteBudgetCategory(user, budgetId, data);
+    res.status(200).json({ status: "Ok", budget });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   getAllBudgets,
   getSingleBudget,
@@ -101,4 +133,6 @@ export default {
   updateBudget,
   deleteBudget,
   addBudgetCategory,
+  updateBudgetCategory,
+  deleteBudgetCategory
 };
