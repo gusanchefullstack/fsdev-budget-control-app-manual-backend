@@ -4,8 +4,10 @@ import { da } from "date-fns/locale";
 
 const prisma = new PrismaClient();
 
+
+// BUDGET CRUD
 // Create new Budget
-const createBudget = async (user: IJwtUser, data: Prisma.BudgetCreateInput) => {
+const createBudget = async (user: IJwtUser, budgetData: Prisma.BudgetCreateInput) => {
   try {
     const validatedUser = await prisma.user.findFirst({
       where: {
@@ -13,9 +15,12 @@ const createBudget = async (user: IJwtUser, data: Prisma.BudgetCreateInput) => {
       },
     });
     if (validatedUser) {
+      if(budgetData.startDate > budgetData.endDate){
+        throw new Error("Budget start date cannot be greater than end date")
+      }
       const newBudget = await prisma.budget.create({
         data: {
-          ...data,
+          ...budgetData,
           owner: {
             connect: { id: validatedUser.id },
           },
@@ -87,7 +92,7 @@ const getSingleBudget = async (user: IJwtUser, budgetId: string) => {
 const updateBudget = async (
   user: IJwtUser,
   budgetId: string,
-  data: Prisma.BudgetUpdateInput
+  budgetData: Prisma.BudgetUpdateInput
 ) => {
   try {
     const validatedUser = await prisma.user.findFirst({
@@ -102,7 +107,7 @@ const updateBudget = async (
           AND: { ownerId: validatedUser.id },
         },
         data: {
-          ...data,
+          ...budgetData,
         },
       });
       return budget;
@@ -142,7 +147,7 @@ const deleteBudget = async (user: IJwtUser, budgetId: string) => {
 const addBudgetCategory = async (
   user: IJwtUser,
   budgetId: string,
-  data: Prisma.BudgetCategoryWhereInput
+  categoryData: Prisma.BudgetCategoryWhereInput
 ) => {
   try {
     const validatedUser = await prisma.user.findUnique({
@@ -159,20 +164,20 @@ const addBudgetCategory = async (
       if (!budget) {
         throw new Error("Budget nof found");
       }
-      if (data.type === "incomes" || data.type === "expenses") {
+      if (categoryData.type === "incomes" || categoryData.type === "expenses") {
         const categoryExist = await prisma.budget.findUnique({
           where: {
             id: budgetId,
-            [data.type]: {
+            [categoryData.type]: {
               some: {
-                name: data.name,
+                name: categoryData.name,
               },
             },
           },
         });
         if (categoryExist) {
           throw new Error(
-            `Category  ${data.name} already exist in ${data.type}`
+            `Category  ${categoryData.name} already exist in ${categoryData.type}`
           );
         }
 
@@ -181,9 +186,9 @@ const addBudgetCategory = async (
             id: budgetId,
           },
           data: {
-            [data.type]: {
+            [categoryData.type]: {
               push: {
-                ...data,
+                ...categoryData,
               },
             },
           },

@@ -174,7 +174,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/gsanchez/gusanchedev/projects/fsdev-budget-control-app-manual-backend/src/generated/prisma",
+      "value": "/home/gusanche/fsdev/backend/projects/fsdev-budget-control-app-manual-backend/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -183,12 +183,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin-arm64",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/gsanchez/gusanchedev/projects/fsdev-budget-control-app-manual-backend/src/prisma/schema.prisma",
+    "sourceFilePath": "/home/gusanche/fsdev/backend/projects/fsdev-budget-control-app-manual-backend/src/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -201,6 +201,7 @@ const config = {
     "db"
   ],
   "activeProvider": "mongodb",
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
