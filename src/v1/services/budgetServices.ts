@@ -1,13 +1,20 @@
-import { PrismaClient, Prisma, CategoryType } from "#generated/prisma/index.js";
+import {
+  PrismaClient,
+  Prisma,
+  CategoryType,
+  BudgetItemFrequency,
+} from "#generated/prisma/index.js";
 import { IJwtUser } from "#v1/models/userJWT.js";
-import { da } from "date-fns/locale";
+import { th } from "date-fns/locale";
 
 const prisma = new PrismaClient();
 
-
 // BUDGET CRUD
 // Create new Budget
-const createBudget = async (user: IJwtUser, budgetData: Prisma.BudgetCreateInput) => {
+const createBudget = async (
+  user: IJwtUser,
+  budgetData: Prisma.BudgetCreateInput
+) => {
   try {
     const validatedUser = await prisma.user.findFirst({
       where: {
@@ -15,8 +22,8 @@ const createBudget = async (user: IJwtUser, budgetData: Prisma.BudgetCreateInput
       },
     });
     if (validatedUser) {
-      if(budgetData.startDate > budgetData.endDate){
-        throw new Error("Budget start date cannot be greater than end date")
+      if (budgetData.startDate > budgetData.endDate) {
+        throw new Error("Budget start date cannot be greater than end date");
       }
       const newBudget = await prisma.budget.create({
         data: {
@@ -143,7 +150,7 @@ const deleteBudget = async (user: IJwtUser, budgetId: string) => {
   }
 };
 
-// Operations for CRUD Budget Categories
+// BUDGET Category CRUD
 const addBudgetCategory = async (
   user: IJwtUser,
   budgetId: string,
@@ -170,14 +177,14 @@ const addBudgetCategory = async (
             id: budgetId,
             [categoryData.type]: {
               some: {
-                name: categoryData.name,
+                categoryName: categoryData.categoryName,
               },
             },
           },
         });
         if (categoryExist) {
           throw new Error(
-            `Category  ${categoryData.name} already exist in ${categoryData.type}`
+            `Category  ${categoryData.categoryName} already exist in ${categoryData.type}`
           );
         }
 
@@ -203,132 +210,204 @@ const addBudgetCategory = async (
   }
 };
 
-const updateBudgetCategory = async (
+// const updateBudgetCategory = async (
+//   user: IJwtUser,
+//   budgetId: string,
+//   data: Prisma.BudgetCategoryWhereInput
+// ) => {
+//   try {
+//     const validatedUser = await prisma.user.findUnique({
+//       where: {
+//         id: user.userId,
+//       },
+//     });
+//     if (validatedUser) {
+//       const budget = await prisma.budget.findUnique({
+//         where: {
+//           id: budgetId,
+//         },
+//       });
+//       if (!budget) {
+//         throw new Error("Budget nof found");
+//       }
+//       if (data.type === "incomes" || data.type === "expenses") {
+//         const oldName = data.name?.toString().split("||")[0]
+//         const newName = data.name?.toString().split("||")[1]
+//         const categoryExist = await prisma.budget.findUnique({
+//           where: {
+//             id: budgetId,
+//             [data.type]: {
+//               some: {
+//                 name: oldName,
+//               },
+//             },
+//           },
+//         });
+//         if (!categoryExist) {
+//           throw new Error(
+//             `Category  ${oldName} doesn't exist in ${data.type}`
+//           );
+//         }
+//         const updatedBudget = await prisma.budget.update({
+//           where: {
+//             id: budgetId,
+//           },
+//           data: {
+//             [data.type]: {
+//               updateMany: {
+//                 where: {
+//                   name: oldName
+//                 },
+//                 data: {
+//                   name: newName
+//                 }
+//               }
+//             }
+//           }
+//         });
+//         return updatedBudget;
+//       }
+//     } else {
+//       throw new Error("Invalid user");
+//     }
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+// const deleteBudgetCategory = async (
+//   user: IJwtUser,
+//   budgetId: string,
+//   data: Prisma.BudgetCategoryUpdateInput
+// ) => {
+//   try {
+//     const validatedUser = await prisma.user.findUnique({
+//       where: {
+//         id: user.userId,
+//       },
+//     });
+//     if (validatedUser) {
+//       const budget = await prisma.budget.findUnique({
+//         where: {
+//           id: budgetId,
+//         },
+//       });
+//       if (!budget) {
+//         throw new Error("Budget nof found");
+//       }
+//       if (data.type === "incomes" || data.type === "expenses") {
+//         const categoryExist = await prisma.budget.findUnique({
+//           where: {
+//             id: budgetId,
+//             [data.type]: {
+//               some: {
+//                 name: data.name,
+//               },
+//             },
+//           },
+//         });
+//         if (!categoryExist) {
+//           throw new Error(
+//             `Category  ${data.name} doesn't exist in ${data.type}`
+//           );
+//         }
+
+//         const updatedBudget = await prisma.budget.update({
+//           where: {
+//             id: budgetId,
+//           },
+//           data: {
+//             [data.type]: {
+//               deleteMany: {
+//                 where: {
+//                   name:data.name
+//                 }
+//               }
+//             },
+//           },
+//         });
+//         return updatedBudget;
+//       }
+//     } else {
+//       throw new Error("Invalid user");
+//     }
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+// BUDGET Items CRUD
+
+const addBudgetItemToBudgetCategory = async (
   user: IJwtUser,
   budgetId: string,
-  data: Prisma.BudgetCategoryWhereInput
+  categoryType: CategoryType,
+  categoryName: string,
+  budgetItemData: Prisma.BudgetItemCreateInput
 ) => {
   try {
     const validatedUser = await prisma.user.findUnique({
-      where: {
-        id: user.userId,
-      },
+      where: { id: user.userId },
     });
-    if (validatedUser) {
+    if (!validatedUser) {
+      throw new Error("Invalid user");
+    } else {
       const budget = await prisma.budget.findUnique({
         where: {
           id: budgetId,
         },
       });
       if (!budget) {
-        throw new Error("Budget nof found");
+        throw new Error("Budget not found");
       }
-      if (data.type === "incomes" || data.type === "expenses") {
-        const oldName = data.name?.toString().split("||")[0]
-        const newName = data.name?.toString().split("||")[1]
-        const categoryExist = await prisma.budget.findUnique({
-          where: {
-            id: budgetId,
-            [data.type]: {
-              some: {
-                name: oldName,
-              },
+      const categories =
+        categoryType == CategoryType.incomes
+          ? budget.incomes.find(
+              (income) => income.categoryName === categoryName
+            )
+          : budget.expenses.find(
+              (expense) => expense.categoryName === categoryName
+            );
+      if (!categories) {
+        throw new Error(
+          `Category ${categoryName} not found in ${categoryType}`
+        );
+      }
+      const newBudgetItem = {
+        itemName: budgetItemData.itemName,
+        description: budgetItemData.description,
+        frequency: budgetItemData.frequency || BudgetItemFrequency.MONTHLY,
+        estimatedAmount: budgetItemData.estimatedAmount,
+        buckets: [],
+      };
+      categories.items.push(newBudgetItem);
+
+      await prisma.budget.update({
+        where: { id: budgetId },
+        data: {
+          [categoryType]: {
+            deleteMany: {
+              where: { categoryName: categoryName },
             },
           },
-        });
-        if (!categoryExist) {
-          throw new Error(
-            `Category  ${oldName} doesn't exist in ${data.type}`
-          );
-        }
-        const updatedBudget = await prisma.budget.update({
-          where: {
-            id: budgetId,
-          },
-          data: {
-            [data.type]: {
-              updateMany: {
-                where: {
-                  name: oldName
-                },
-                data: {
-                  name: newName
-                }
-              }
-            }
-          }
-        });
-        return updatedBudget;
-      }
-    } else {
-      throw new Error("Invalid user");
-    }
-  } catch (error) {
-    throw error;
-  }
-};
-
-const deleteBudgetCategory = async (
-  user: IJwtUser,
-  budgetId: string,
-  data: Prisma.BudgetCategoryUpdateInput
-) => {
-  try {
-    const validatedUser = await prisma.user.findUnique({
-      where: {
-        id: user.userId,
-      },
-    });
-    if (validatedUser) {
-      const budget = await prisma.budget.findUnique({
-        where: {
-          id: budgetId,
         },
       });
-      if (!budget) {
-        throw new Error("Budget nof found");
-      }
-      if (data.type === "incomes" || data.type === "expenses") {
-        const categoryExist = await prisma.budget.findUnique({
-          where: {
-            id: budgetId,
-            [data.type]: {
-              some: {
-                name: data.name,
-              },
-            },
-          },
-        });
-        if (!categoryExist) {
-          throw new Error(
-            `Category  ${data.name} doesn't exist in ${data.type}`
-          );
-        }
 
-        const updatedBudget = await prisma.budget.update({
-          where: {
-            id: budgetId,
+      const updatedBudget = await prisma.budget.update({
+        where: { id: budgetId },
+        data: {
+          [categoryType]: {
+            push: categories,
           },
-          data: {
-            [data.type]: {
-              deleteMany: {
-                where: {
-                  name:data.name
-                }
-              }
-            },
-          },
-        });
-        return updatedBudget;
-      }
-    } else {
-      throw new Error("Invalid user");
+        },
+      });
+
+      return updatedBudget;
     }
   } catch (error) {
     throw error;
   }
 };
-
 
 export default {
   createBudget,
@@ -337,6 +416,7 @@ export default {
   updateBudget,
   deleteBudget,
   addBudgetCategory,
-  updateBudgetCategory,
-  deleteBudgetCategory
+  // updateBudgetCategory,
+  // deleteBudgetCategory,
+  addBudgetItemToBudgetCategory,
 };

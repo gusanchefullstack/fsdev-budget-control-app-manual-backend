@@ -1201,7 +1201,7 @@ export namespace Prisma {
 
 
   export type BudgetCategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    name?: boolean
+    categoryName?: boolean
     description?: boolean
     type?: boolean
     items?: boolean | BudgetItemDefaultArgs<ExtArgs>
@@ -1210,19 +1210,19 @@ export namespace Prisma {
 
 
   export type BudgetCategorySelectScalar = {
-    name?: boolean
+    categoryName?: boolean
     description?: boolean
     type?: boolean
   }
 
-  export type BudgetCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"name" | "description" | "type" | "items", ExtArgs["result"]["budgetCategory"]>
+  export type BudgetCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"categoryName" | "description" | "type" | "items", ExtArgs["result"]["budgetCategory"]>
   export type BudgetCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $BudgetCategoryPayload = {
     name: "BudgetCategory"
     objects: {}
     scalars: {
-      name: string
+      categoryName: string
       description: string
       type: $Enums.CategoryType
     }
@@ -1241,7 +1241,7 @@ export namespace Prisma {
    * Fields of the BudgetCategory model
    */
   interface BudgetCategoryFieldRefs {
-    readonly name: FieldRef<"BudgetCategory", 'String'>
+    readonly categoryName: FieldRef<"BudgetCategory", 'String'>
     readonly description: FieldRef<"BudgetCategory", 'String'>
     readonly type: FieldRef<"BudgetCategory", 'CategoryType'>
   }
@@ -1276,7 +1276,7 @@ export namespace Prisma {
 
 
   export type BudgetItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    name?: boolean
+    itemName?: boolean
     description?: boolean
     buckets?: boolean | BudgetItemBucketDefaultArgs<ExtArgs>
     frequency?: boolean
@@ -1286,20 +1286,20 @@ export namespace Prisma {
 
 
   export type BudgetItemSelectScalar = {
-    name?: boolean
+    itemName?: boolean
     description?: boolean
     frequency?: boolean
     estimatedAmount?: boolean
   }
 
-  export type BudgetItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"name" | "description" | "buckets" | "frequency" | "estimatedAmount", ExtArgs["result"]["budgetItem"]>
+  export type BudgetItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"itemName" | "description" | "buckets" | "frequency" | "estimatedAmount", ExtArgs["result"]["budgetItem"]>
   export type BudgetItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $BudgetItemPayload = {
     name: "BudgetItem"
     objects: {}
     scalars: {
-      name: string
+      itemName: string
       description: string
       frequency: $Enums.BudgetItemFrequency
       estimatedAmount: number
@@ -1319,7 +1319,7 @@ export namespace Prisma {
    * Fields of the BudgetItem model
    */
   interface BudgetItemFieldRefs {
-    readonly name: FieldRef<"BudgetItem", 'String'>
+    readonly itemName: FieldRef<"BudgetItem", 'String'>
     readonly description: FieldRef<"BudgetItem", 'String'>
     readonly frequency: FieldRef<"BudgetItem", 'BudgetItemFrequency'>
     readonly estimatedAmount: FieldRef<"BudgetItem", 'Float'>
@@ -6015,7 +6015,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Budget"> | Date | string
     updatedAt?: DateTimeFilter<"Budget"> | Date | string
     owner?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "name" | "name" | "name" | "name">
+  }, "id" | "categoryName" | "categoryName">
 
   export type BudgetOrderByWithAggregationInput = {
     id?: SortOrder
@@ -6641,7 +6641,7 @@ export namespace Prisma {
   }
 
   export type BudgetCategoryObjectEqualityInput = {
-    name: string
+    categoryName: string
     description: string
     type: $Enums.CategoryType
     items?: BudgetItemObjectEqualityInput[]
@@ -6869,7 +6869,7 @@ export namespace Prisma {
   }
 
   export type BudgetCategoryCreateInput = {
-    name: string
+    categoryName: string
     description: string
     type?: $Enums.CategoryType
     items?: BudgetItemCreateInput | BudgetItemCreateInput[]
@@ -7058,14 +7058,14 @@ export namespace Prisma {
     AND?: BudgetCategoryWhereInput | BudgetCategoryWhereInput[]
     OR?: BudgetCategoryWhereInput[]
     NOT?: BudgetCategoryWhereInput | BudgetCategoryWhereInput[]
-    name?: StringFilter<"BudgetCategory"> | string
+    categoryName?: StringFilter<"BudgetCategory"> | string
     description?: StringFilter<"BudgetCategory"> | string
     type?: EnumCategoryTypeFilter<"BudgetCategory"> | $Enums.CategoryType
     items?: BudgetItemCompositeListFilter | BudgetItemObjectEqualityInput[]
   }
 
   export type BudgetItemObjectEqualityInput = {
-    name: string
+    itemName: string
     description: string
     buckets?: BudgetItemBucketObjectEqualityInput[]
     frequency: $Enums.BudgetItemFrequency
@@ -7388,7 +7388,7 @@ export namespace Prisma {
   }
 
   export type BudgetItemCreateInput = {
-    name: string
+    itemName: string
     description: string
     buckets?: BudgetItemBucketCreateInput | BudgetItemBucketCreateInput[]
     frequency?: $Enums.BudgetItemFrequency
@@ -7616,7 +7616,7 @@ export namespace Prisma {
   }
 
   export type BudgetCategoryUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
+    categoryName?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
     items?: XOR<BudgetItemListUpdateEnvelopeInput, BudgetItemCreateInput> | BudgetItemCreateInput[]
@@ -7633,7 +7633,7 @@ export namespace Prisma {
     AND?: BudgetItemWhereInput | BudgetItemWhereInput[]
     OR?: BudgetItemWhereInput[]
     NOT?: BudgetItemWhereInput | BudgetItemWhereInput[]
-    name?: StringFilter<"BudgetItem"> | string
+    itemName?: StringFilter<"BudgetItem"> | string
     description?: StringFilter<"BudgetItem"> | string
     buckets?: BudgetItemBucketCompositeListFilter | BudgetItemBucketObjectEqualityInput[]
     frequency?: EnumBudgetItemFrequencyFilter<"BudgetItem"> | $Enums.BudgetItemFrequency
@@ -7716,7 +7716,7 @@ export namespace Prisma {
   }
 
   export type BudgetItemUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
+    itemName?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     buckets?: XOR<BudgetItemBucketListUpdateEnvelopeInput, BudgetItemBucketCreateInput> | BudgetItemBucketCreateInput[]
     frequency?: EnumBudgetItemFrequencyFieldUpdateOperationsInput | $Enums.BudgetItemFrequency

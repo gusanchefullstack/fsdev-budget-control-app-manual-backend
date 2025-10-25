@@ -90,22 +90,20 @@ model Budget {
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
 
-  @@unique([incomes.name])
-  @@unique([expenses.name])
-  @@unique([incomes.items.name])
-  @@unique([expenses.items.name])
+  @@unique([incomes.categoryName])
+  @@unique([expenses.categoryName])
   @@map("budgets")
 }
 
 type BudgetCategory {
-  name        String
-  description String
-  type        CategoryType @default(expenses)
-  items       BudgetItem[]
+  categoryName String
+  description  String
+  type         CategoryType @default(expenses)
+  items        BudgetItem[]
 }
 
 type BudgetItem {
-  name            String
+  itemName        String
   description     String
   buckets         BudgetItemBucket[]
   frequency       BudgetItemFrequency @default(MONTHLY)

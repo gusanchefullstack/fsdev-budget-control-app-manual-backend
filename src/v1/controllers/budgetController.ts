@@ -94,7 +94,8 @@ const addBudgetCategory = async (
   }
 };
 
-const updateBudgetCategory = async (
+// CRUD Operations for Budget Items
+const addBudgetItemToCategory = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -102,29 +103,50 @@ const updateBudgetCategory = async (
   try {
     const user = req.user as IJwtUser;
     const { budgetId } = req.params;
-    const data = req.body;
-    const budget = await budgetServices.updateBudgetCategory(user, budgetId, data);  //TODO Change function
+    const { categoryType, categoryName, data } = req.body;
+    const budget = await budgetServices.addBudgetItemToBudgetCategory(
+      user,
+      budgetId,
+      categoryType,
+      categoryName,
+      data
+    );
     res.status(200).json({ status: "Ok", budget });
   } catch (error) {
     next(error);
   }
 };
+// const updateBudgetCategory = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const user = req.user as IJwtUser;
+//     const { budgetId } = req.params;
+//     const data = req.body;
+//     const budget = await budgetServices.updateBudgetCategory(user, budgetId, data);  //TODO Change function
+//     res.status(200).json({ status: "Ok", budget });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
-const deleteBudgetCategory = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const user = req.user as IJwtUser;
-    const { budgetId } = req.params;
-    const data = req.body;
-    const budget = await budgetServices.deleteBudgetCategory(user, budgetId, data);
-    res.status(200).json({ status: "Ok", budget });
-  } catch (error) {
-    next(error);
-  }
-};
+// const deleteBudgetCategory = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const user = req.user as IJwtUser;
+//     const { budgetId } = req.params;
+//     const data = req.body;
+//     const budget = await budgetServices.deleteBudgetCategory(user, budgetId, data);
+//     res.status(200).json({ status: "Ok", budget });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 export default {
   getAllBudgets,
@@ -133,6 +155,7 @@ export default {
   updateBudget,
   deleteBudget,
   addBudgetCategory,
-  updateBudgetCategory,
-  deleteBudgetCategory
+  addBudgetItemToCategory,
+  // updateBudgetCategory,
+  // deleteBudgetCategory
 };

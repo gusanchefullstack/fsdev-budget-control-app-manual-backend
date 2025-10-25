@@ -57,11 +57,11 @@ budgetRouter.delete(
 
 // CRUD operations for Budget Categories
 
-// Create  Budget Categorie
+// Create  Budget Category
 budgetRouter.post(
   "/:budgetId/categories",
   param("budgetId").isMongoId().withMessage("Invalid budget id"),
-  body("name")
+  body("categoryName")
     .exists()
     .trim()
     .isString()
@@ -80,49 +80,68 @@ budgetRouter.post(
   budgetController.addBudgetCategory
 );
 
-// Update Budget Category
-budgetRouter.put(
-  "/:budgetId/categories",
+// Create  Budget Item in Category
+budgetRouter.post(
+  "/:budgetId/categories/items",
   param("budgetId").isMongoId().withMessage("Invalid budget id"),
-  body("name")
-    .exists()
-    .trim()
-    .isString()
-    .withMessage("Invalid budget category name")
-    .contains("||")
-    .withMessage(
-      "Budget category name must be separated by || (ex: nameOld||nameNew)"
-    ),
-  body("description")
-    .optional()
-    .trim()
-    .isString()
-    .withMessage("Invalid budget category description"),
-  body("type")
-    .exists()
-    .trim()
-    .isIn(["incomes", "expenses"])
-    .withMessage("Invalid budget category type"),
-  inputValidatorHandler,
-  budgetController.updateBudgetCategory
-);
-
-// Delete Budget Category
-budgetRouter.delete(
-  "/:budgetId/categories",
-  param("budgetId").isMongoId().withMessage("Invalid budget id"),
-  body("name")
+  body("categoryName")
     .exists()
     .trim()
     .isString()
     .withMessage("Invalid budget category name"),
-  body("type")
+  body("categoryType")
     .exists()
     .trim()
     .isIn(["incomes", "expenses"])
     .withMessage("Invalid budget category type"),
+  body("data").exists().withMessage("Invalid budget category data"),
   inputValidatorHandler,
-  budgetController.deleteBudgetCategory
+  budgetController.addBudgetItemToCategory
 );
+
+// Update Budget Category
+// budgetRouter.put(
+//   "/:budgetId/categories",
+//   param("budgetId").isMongoId().withMessage("Invalid budget id"),
+//   body("name")
+//     .exists()
+//     .trim()
+//     .isString()
+//     .withMessage("Invalid budget category name")
+//     .contains("||")
+//     .withMessage(
+//       "Budget category name must be separated by || (ex: nameOld||nameNew)"
+//     ),
+//   body("description")
+//     .optional()
+//     .trim()
+//     .isString()
+//     .withMessage("Invalid budget category description"),
+//   body("type")
+//     .exists()
+//     .trim()
+//     .isIn(["incomes", "expenses"])
+//     .withMessage("Invalid budget category type"),
+//   inputValidatorHandler,
+//   budgetController.updateBudgetCategory
+// );
+
+// Delete Budget Category
+// budgetRouter.delete(
+//   "/:budgetId/categories",
+//   param("budgetId").isMongoId().withMessage("Invalid budget id"),
+//   body("name")
+//     .exists()
+//     .trim()
+//     .isString()
+//     .withMessage("Invalid budget category name"),
+//   body("type")
+//     .exists()
+//     .trim()
+//     .isIn(["incomes", "expenses"])
+//     .withMessage("Invalid budget category type"),
+//   inputValidatorHandler,
+//   budgetController.deleteBudgetCategory
+// );
 
 export default budgetRouter;
