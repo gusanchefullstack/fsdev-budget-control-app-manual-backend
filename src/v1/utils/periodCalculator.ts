@@ -62,7 +62,7 @@ const semiAnnualPeriods = (startDate: string, endDate: string) => {
 };
 
 const oneTime = (oneDate: string) => {
-  return nextMonday(oneDate);
+  return [nextMonday(oneDate)];
 };
 
 export default {
@@ -75,9 +75,24 @@ export default {
   oneTime,
 };
 
-/*
-const s = new Date(2025, 4, 1);
-const e = new Date(2025, 9, 31);
-const test = oneTime(s.toString())
-console.log(test)
-*/
+
+// const s = new Date(2025, 0, 1);
+// const e = new Date(2025, 9, 27);
+// const test1 = oneTime(s.toString())
+// const test2 = dailyPeriods(s.toString(),e.toString())
+// const test3 = weeklyPeriods(s.toString(),e.toString())
+// const test4 = monthlyPeriods(s.toString(),e.toString())
+// const test5 = quarterlyPeriods(s.toString(),e.toString())
+// const test6 = semiAnnualPeriods(s.toString(),e.toString())
+// const test7 = annualPeriods(s.toString(),e.toString())
+// console.log(test1)
+// console.log(test2)
+// console.log(test3)
+// console.log(test4)
+// console.log(test5)
+// console.log(test6)
+// console.log(test7)
+// console.log(test7[0])
+// console.log(typeof(test7[0]))
+// console.log(test7[0].toISOString())
+

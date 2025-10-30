@@ -181,7 +181,7 @@ exports.BudgetItemFrequency = exports.$Enums.BudgetItemFrequency = {
   MONTHLY: 'MONTHLY',
   QUARTERLY: 'QUARTERLY',
   SEMIANNUAL: 'SEMIANNUAL',
-  ANNUALY: 'ANNUALY',
+  ANNUALLY: 'ANNUALLY',
   ONETIME: 'ONETIME'
 };
 

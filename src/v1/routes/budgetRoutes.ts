@@ -94,7 +94,36 @@ budgetRouter.post(
     .trim()
     .isIn(["incomes", "expenses"])
     .withMessage("Invalid budget category type"),
-  body("data").exists().withMessage("Invalid budget category data"),
+  body("itemName")
+    .exists()
+    .trim()
+    .isString()
+    .withMessage("Invalid budget item name"),
+  body("description")
+    .exists()
+    .trim()
+    .isString()
+    .withMessage("Invalid budget item description"),
+  body("frequency")
+    .exists()
+    .trim()
+    .isIn([
+      "DAILY",
+      "WEEKLY",
+      "MONTHLY",
+      "QUARTERLY",
+      "SEMIANNUAL",
+      "ANNUALLY",
+      "ONETIME",
+    ])
+    .withMessage(
+      "Invalid budget item frequency: valid options are DAILY WEEKLY MONTHLY QUARTERLY SEMIANNUAL ANNUALLY ONETIME"
+    ),
+  body("estimatedAmount")
+    .exists()
+    .trim()
+    .isNumeric()
+    .withMessage("Invalid input for estimated amount"),
   inputValidatorHandler,
   budgetController.addBudgetItemToCategory
 );

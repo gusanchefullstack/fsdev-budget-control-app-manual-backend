@@ -3,9 +3,11 @@ import {
   Prisma,
   CategoryType,
   BudgetItemFrequency,
+  BudgetItem,
+  BudgetItemBucket,
 } from "#generated/prisma/index.js";
+import { BudgetItemBucketGenerator } from "./budgetItemBucketGenerator.js";
 import { IJwtUser } from "#v1/models/userJWT.js";
-import { th } from "date-fns/locale";
 
 const prisma = new PrismaClient();
 
@@ -343,7 +345,10 @@ const addBudgetItemToBudgetCategory = async (
   budgetId: string,
   categoryType: CategoryType,
   categoryName: string,
-  budgetItemData: Prisma.BudgetItemCreateInput
+  itemName: string,
+  description: string,
+  frequency: BudgetItemFrequency,
+  estimatedAmount: number
 ) => {
   try {
     const validatedUser = await prisma.user.findUnique({
@@ -359,50 +364,57 @@ const addBudgetItemToBudgetCategory = async (
       });
       if (!budget) {
         throw new Error("Budget not found");
-      }
-      const categories =
-        categoryType == CategoryType.incomes
-          ? budget.incomes.find(
-              (income) => income.categoryName === categoryName
-            )
-          : budget.expenses.find(
-              (expense) => expense.categoryName === categoryName
-            );
-      if (!categories) {
-        throw new Error(
-          `Category ${categoryName} not found in ${categoryType}`
-        );
-      }
-      const newBudgetItem = {
-        itemName: budgetItemData.itemName,
-        description: budgetItemData.description,
-        frequency: budgetItemData.frequency || BudgetItemFrequency.MONTHLY,
-        estimatedAmount: budgetItemData.estimatedAmount,
-        buckets: [],
-      };
-      categories.items.push(newBudgetItem);
+      } else {
+        const categories =
+          categoryType == CategoryType.incomes
+            ? budget.incomes.find(
+                (income) => income.categoryName === categoryName
+              )
+            : budget.expenses.find(
+                (expense) => expense.categoryName === categoryName
+              );
+        if (!categories) {
+          throw new Error(
+            `Category ${categoryName} not found in ${categoryType}`
+          );
+        }
+        const addedBucketsToItem: BudgetItemBucket[] =
+          BudgetItemBucketGenerator(
+            budget.startDate.toISOString(),
+            budget.endDate.toISOString(),
+            estimatedAmount,
+            frequency
+          );
+        const newBudgetItem: BudgetItem = {
+          itemName,
+          description,
+          frequency: frequency || BudgetItemFrequency.MONTHLY,
+          estimatedAmount,
+          buckets: addedBucketsToItem,
+        };
+        categories.items.push(newBudgetItem);
 
-      await prisma.budget.update({
-        where: { id: budgetId },
-        data: {
-          [categoryType]: {
-            deleteMany: {
-              where: { categoryName: categoryName },
+        await prisma.budget.update({
+          where: { id: budgetId },
+          data: {
+            [categoryType]: {
+              deleteMany: {
+                where: { categoryName: categoryName },
+              },
             },
           },
-        },
-      });
+        });
 
-      const updatedBudget = await prisma.budget.update({
-        where: { id: budgetId },
-        data: {
-          [categoryType]: {
-            push: categories,
+        const updatedBudget = await prisma.budget.update({
+          where: { id: budgetId },
+          data: {
+            [categoryType]: {
+              push: categories,
+            },
           },
-        },
-      });
-
-      return updatedBudget;
+        });
+        return updatedBudget;
+      }
     }
   } catch (error) {
     throw error;

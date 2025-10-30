@@ -30,7 +30,7 @@ enum BudgetItemFrequency {
   MONTHLY
   QUARTERLY
   SEMIANNUAL
-  ANNUALY
+  ANNUALLY
   ONETIME
 }
 

@@ -103,14 +103,26 @@ const addBudgetItemToCategory = async (
   try {
     const user = req.user as IJwtUser;
     const { budgetId } = req.params;
-    const { categoryType, categoryName, data } = req.body;
+    let {
+      categoryType,
+      categoryName,
+      itemName,
+      description,
+      frequency,
+      estimatedAmount,
+    } = req.body;
+
     const budget = await budgetServices.addBudgetItemToBudgetCategory(
       user,
       budgetId,
       categoryType,
       categoryName,
-      data
+      itemName,
+      description,
+      frequency,
+      (estimatedAmount = parseFloat(estimatedAmount))
     );
+    console.log(budget);
     res.status(200).json({ status: "Ok", budget });
   } catch (error) {
     next(error);
