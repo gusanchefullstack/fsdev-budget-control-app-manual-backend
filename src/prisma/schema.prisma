@@ -35,18 +35,19 @@ enum BudgetItemFrequency {
 }
 
 model User {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  firstName String?
-  lastName  String?
-  email     String
-  username  String     @unique
-  password  String
-  accounts  Account[]
-  providers Provider[]
-  Budget    Budget[]
-  role      Role       @default(USER)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  firstName    String?
+  lastName     String?
+  email        String
+  username     String        @unique
+  password     String
+  accounts     Account[]
+  providers    Provider[]
+  Budget       Budget[]
+  transactions Transaction[]
+  role         Role          @default(USER)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 
   @@map("users")
 }
@@ -115,4 +116,22 @@ type BudgetItemBucket {
   currentAmount   Float
   estimatedDate   DateTime
   currentDate     DateTime
+}
+
+model Transaction {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  description  String
+  amount       Float
+  type         String
+  categoryName String
+  itemName     String
+  timestamp    DateTime
+  source       Json
+  destination  Json
+  userId       String   @db.ObjectId
+  user         User     @relation(fields: [userId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("transactions")
 }
